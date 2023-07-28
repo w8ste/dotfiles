@@ -1,3 +1,0 @@
-[submodule "nvim"]
-	path = nvim
-	url = https://github.com/w8ste/Neovim-config
