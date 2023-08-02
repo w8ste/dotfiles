@@ -1,3 +1,3 @@
 [submodule "nvim"]
-	path = Neovim-config
-	url = https://github.com/w8ste/Neovim-config.git
+	path = nvim
+	url = https://github.com/w8ste/nvim.git
