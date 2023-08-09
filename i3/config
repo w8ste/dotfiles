@@ -67,7 +67,7 @@ bindsym mod1+F12 exec --no-startup-id brightnessctl set +5%
 bindsym mod1+F11 exec --no-startup-id brightnessctl set 5%-
 
 #screenshot tool (flameshot)
-bindsym mod1+shift+s exec --no-startup-id flameshot gui --raw | xclip -sel clip -t image/png 
+bindsym $mod+shift+s exec --no-startup-id flameshot gui --raw | xclip -sel clip -t image/png 
 #flameshot gui || killall flameshot
 
 #network managment tool
