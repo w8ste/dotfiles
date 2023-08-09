@@ -75,7 +75,7 @@ esac
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='exa -lah'
+    alias ls='exa -lh'
     #alias dir='dir --color=auto'
     #alias vdir='vdir --color=auto'
 
@@ -87,14 +87,19 @@ fi
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
+# my custom aliases 
+alias up="sudo pacman -Syu"
+alias n="nvim"
+alias nv="nvim ."
+alias linit="git clone git@github.com:w8ste/Latex-Template.git && 
+    cd Latex-Template/ && mv myTemplate.tex .. && cd .. && 
+    rm -rf Latex-Template && mkdir pictures"
+
 # some more ls aliases
+alias lh='exa -lah'
 alias ll='ls -alF'
 alias la='ls -A'
-alias l='ls -CF'
-
-# nvim shortcuts
-alias nv='nvim .'
-alias n='nvim'
+alias l='ls -da'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -119,6 +124,9 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-export PATH="$PATH:$HOME/.cargo/bin"
-pfetch
+export PATH=/home/hannes/.local/bin:$PATH
+### RANDOM COLOR SCRIPT ###
+colorscript random
+# Add Starship to the terminal 
 eval "$(starship init bash)"
+

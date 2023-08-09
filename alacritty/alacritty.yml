@@ -1,0 +1,268 @@
+window.opacity: 0.9
+dynamic_title: false
+scrolling:
+  # Maximum number of lines in the scrollback buffer.
+  # Specifying '0' will disable scrolling.
+  history: 10000
+
+  # Scrolling distance multiplier.
+  multiplier: 3
+
+# Font configuration
+font:
+  normal:
+    # Font family
+    family: FiraCode NFM
+
+    # The `style` can be specified to pick a specific face.
+    style: Regular
+
+  # Bold font face
+  bold:
+    # Font family
+    #
+    # If the bold family is not specified, it will fall back to the
+    # value specified for the normal font.
+    family: FiraCode NFM
+
+    # The `style` can be specified to pick a specific face.
+    style: Bold
+
+  # Italic font face
+  italic:
+    # Font family
+    #
+    # If the italic family is not specified, it will fall back to the
+    # value specified for the normal font.
+    family: FiraCode NFM
+
+    # The `style` can be specified to pick a specific face.
+    #style: Italic
+
+  # Bold italic font face
+  bold_italic:
+    # Font family
+    #
+    # If the bold italic family is not specified, it will fall back to the
+    # value specified for the normal font.
+    family: FiraCode NFM
+
+    # The `style` can be specified to pick a specific face.
+    #style: Bold Italic
+
+  # Point size
+  size: 16.0
+
+  # Offset is the extra space around each character. `offset.y` can be thought
+  # of as modifying the line spacing, and `offset.x` as modifying the letter
+  # spacing.
+  #offset:
+  #  x: 0
+  #  y: 0
+
+  # Glyph offset determines the locations of the glyphs within their cells with
+  # the default being at the bottom. Increasing `x` moves the glyph to the
+  # right, increasing `y` moves the glyph upward.
+  #glyph_offset:
+  #  x: 0
+  #  y: 0
+
+  # Use built-in font for box drawing characters.
+  #
+  # If `true`, Alacritty will use a custom built-in font for box drawing
+  # characters (Unicode points 2500 - 259f).
+  #
+  #builtin_box_drawing: true
+
+# If `true`, bold text is drawn using the bright color variants.
+#draw_bold_text_with_bright_colors: false
+schemes:
+  gruvbox_material_hard_dark: &gruvbox_material_hard_dark
+    primary:
+      background: '0x1d2021'
+      foreground: '0xd4be98'
+    normal:
+      black:   '0x32302f'
+      red:     '0xea6962'
+      green:   '0xa9b665'
+      yellow:  '0xd8a657'
+      blue:    '0x7daea3'
+      magenta: '0xd3869b'
+      cyan:    '0x89b482'
+      white:   '0xd4be98'
+    bright:
+      black:   '0x32302f'
+      red:     '0xea6962'
+      green:   '0xa9b665'
+      yellow:  '0xd8a657'
+      blue:    '0x7daea3'
+      magenta: '0xd3869b'
+      cyan:    '0x89b482'
+      white:   '0xd4be98'
+  gruvbox_material_medium_dark: &gruvbox_material_medium_dark
+    primary:
+      background: '0x282828'
+      foreground: '0xd4be98'
+    normal:
+      black:   '0x3c3836'
+      red:     '0xea6962'
+      green:   '0xa9b665'
+      yellow:  '0xd8a657'
+      blue:    '0x7daea3'
+      magenta: '0xd3869b'
+      cyan:    '0x89b482'
+      white:   '0xd4be98'
+    bright:
+      black:   '0x3c3836'
+      red:     '0xea6962'
+      green:   '0xa9b665'
+      yellow:  '0xd8a657'
+      blue:    '0x7daea3'
+      magenta: '0xd3869b'
+      cyan:    '0x89b482'
+      white:   '0xd4be98'
+  gruvbox_material_soft_dark: &gruvbox_material_soft_dark
+    primary:
+      background: '0x32302f'
+      foreground: '0xd4be98'
+    normal:
+      black:   '0x45403d'
+      red:     '0xea6962'
+      green:   '0xa9b665'
+      yellow:  '0xd8a657'
+      blue:    '0x7daea3'
+      magenta: '0xd3869b'
+      cyan:    '0x89b482'
+      white:   '0xd4be98'
+    bright:
+      black:   '0x45403d'
+      red:     '0xea6962'
+      green:   '0xa9b665'
+      yellow:  '0xd8a657'
+      blue:    '0x7daea3'
+      magenta: '0xd3869b'
+      cyan:    '0x89b482'
+      white:   '0xd4be98'
+  gruvbox_material_hard_light: &gruvbox_material_hard_light
+    primary:
+      background: '0xf9f5d7'
+      foreground: '0x654735'
+    normal:
+      black:   '0x654735'
+      red:     '0xc14a4a'
+      green:   '0x6c782e'
+      yellow:  '0xb47109'
+      blue:    '0x45707a'
+      magenta: '0x945e80'
+      cyan:    '0x4c7a5d'
+      white:   '0xf2e5bc'
+    bright:
+      black:   '0x654735'
+      red:     '0xc14a4a'
+      green:   '0x6c782e'
+      yellow:  '0xb47109'
+      blue:    '0x45707a'
+      magenta: '0x945e80'
+      cyan:    '0x4c7a5d'
+      white:   '0xf2e5bc'
+  gruvbox_material_medium_light: &gruvbox_material_medium_light
+    primary:
+      background: '0xfbf1c7'
+      foreground: '0x654735'
+    normal:
+      black:   '0x654735'
+      red:     '0xc14a4a'
+      green:   '0x6c782e'
+      yellow:  '0xb47109'
+      blue:    '0x45707a'
+      magenta: '0x945e80'
+      cyan:    '0x4c7a5d'
+      white:   '0xeee0b7'
+    bright:
+      black:   '0x654735'
+      red:     '0xc14a4a'
+      green:   '0x6c782e'
+      yellow:  '0xb47109'
+      blue:    '0x45707a'
+      magenta: '0x945e80'
+      cyan:    '0x4c7a5d'
+      white:   '0xeee0b7'
+  gruvbox_material_soft_light: &gruvbox_material_soft_light
+    primary:
+      background: '0xf2e5bc'
+      foreground: '0x654735'
+    normal:
+      black:   '0x654735'
+      red:     '0xc14a4a'
+      green:   '0x6c782e'
+      yellow:  '0xb47109'
+      blue:    '0x45707a'
+      magenta: '0x945e80'
+      cyan:    '0x4c7a5d'
+      white:   '0xe6d5ae'
+    bright:
+      black:   '0x654735'
+      red:     '0xc14a4a'
+      green:   '0x6c782e'
+      yellow:  '0xb47109'
+      blue:    '0x45707a'
+      magenta: '0x945e80'
+      cyan:    '0x4c7a5d'
+      white:   '0xe6d5ae'
+  tokyo-night: &tokyo-night
+    # Default colors
+    primary:
+      background: '#1a1b26'
+      foreground: '#a9b1d6'
+
+    # Normal colors
+    normal:
+      black:   '#32344a'
+      red:     '#f7768e'
+      green:   '#9ece6a'
+      yellow:  '#e0af68'
+      blue:    '#7aa2f7'
+      magenta: '#ad8ee6'
+      cyan:    '#449dab'
+      white:   '#787c99'
+
+    # Bright colors
+    bright:
+      black:   '#444b6a'
+      red:     '#ff7a93'
+      green:   '#b9f27c'
+      yellow:  '#ff9e64'
+      blue:    '#7da6ff'
+      magenta: '#bb9af7'
+      cyan:    '#0db9d7'
+      white:   '#acb0d0'
+
+  tokyo-night-storm: &tokyo-night-storm
+    # Default colors
+    primary:
+      background: '#24283b'
+      foreground: '#a9b1d6'
+
+    # Normal colors
+    normal:
+      black:   '#32344a'
+      red:     '#f7768e'
+      green:   '#9ece6a'
+      yellow:  '#e0af68'
+      blue:    '#7aa2f7'
+      magenta: '#ad8ee6'
+      cyan:    '#449dab'
+      white:   '#9699a8'
+
+    # Bright colors
+    bright:
+      black:   '#444b6a'
+      red:     '#ff7a93'
+      green:   '#b9f27c'
+      yellow:  '#ff9e64'
+      blue:    '#7da6ff'
+      magenta: '#bb9af7'
+      cyan:    '#0db9d7'
+      white:   '#acb0d0'
+# Apply the color scheme.
+colors: *tokyo-night-storm

@@ -57,8 +57,8 @@ exec --no-startup-id nm-applet
 exec --no-startup-id ~/.config/pad.sh
 
 # launch spotify on startup
-exec --no-startup-id flatpak run com.spotify.Client 
-# just spotify on desktop
+exec --no-startup-id spotify 
+#flatpak run com.spotify.Client for flatpak  
 
 # binding screen brightness up: 
 bindsym mod1+F12 exec --no-startup-id brightnessctl set +5%
@@ -175,17 +175,6 @@ set $ws7 "7"
 set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
-
-
-#set $ws2 "2:  "
-#set $ws3 "3: "
-#set $ws4 "4:  "
-#set $ws5 "5:  "
-#set $ws6 "6:  "
-#set $ws7 "7:  "
-#set $ws8 "8:  "
-#set $ws9 "9:  "
-#set $ws10 "10:  "
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
