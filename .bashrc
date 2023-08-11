@@ -94,7 +94,7 @@ alias nv="nvim ."
 alias linit="git clone git@github.com:w8ste/Latex-Template.git && 
     cd Latex-Template/ && mv myTemplate.tex .. && cd .. && 
     rm -rf Latex-Template && mkdir pictures"
-
+alias lg="lazygit"
 # some more ls aliases
 alias lh='exa -lah'
 alias ll='ls -alF'
