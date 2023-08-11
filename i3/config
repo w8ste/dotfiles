@@ -96,7 +96,7 @@ bindsym mod1+Tab exec rofi -show window
 bindsym $mod+m exec ~/.config/rofi/powermenu.sh
 
 # launch nemo file-explorer
-bindsym mod1+n exec --no-startup-id thunar &
+bindsym mod1+n exec --no-startup-id nemo & 
 
 # launch firefox 
 bindsym mod1+f exec --no-startup-id firefox &
