@@ -193,6 +193,7 @@ assign [class = "jetbrains-idea-ce"] $ws3
 assign [class = "jetbrains-idea"] $ws3
 assign [class = "Code"] $ws3
 assign [class = "jetbrains-clion"] $ws3
+assign [class = "jetbrains-pycharm-ce"] $ws3
 assign [class = "processing-app-Base"] $ws3  
 assign [class = "Spotify"] $ws4
 assign [class = "discord"] $ws6
