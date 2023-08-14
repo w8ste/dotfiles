@@ -51,6 +51,9 @@ exec --no-startup-id picom -b
 # launch spotify on startup
 exec --no-startup-id flatpak run com.spotify.Client  
 
+# launch dunst
+exec --no-startup-id dunst &
+
 # binding screen brightness up: 
 bindsym mod1+F12 exec --no-startup-id brightnessctl set +5%
 
@@ -275,7 +278,7 @@ set $bar-bg                     #31335B
 # #383C4A Wallpaper grey
 # Wallpaper blue #5294E2
 # window colors  
-client.focused              $focued-border        $focused-window         $focused-window           $focused-window
+client.focused              $focused-border        $focused-window         $focused-window           $focused-window
 client.unfocused                  $inactive-bg-color    $bg-color               $inactive-bg-color            $focused-window  
 client.focused_inactive     $inactive-bg-color    $inactive-bg-color      $inactive-text-color      #000000
 client.urgent               $urgent-bg-color      $urgent-bg-color        $text-color                 #000000
