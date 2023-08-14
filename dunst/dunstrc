@@ -95,7 +95,7 @@
     frame_width = 3
 
     # Defines color of the frame around the notification window.
-    frame_color = "#aaaaaa"
+    frame_color = "#0e70ef"
 
     # Size of gap to display between notifications - requires a compositor.
     # If value is greater than 0, separator_height will be ignored and a border
@@ -167,7 +167,7 @@
 
     # Alignment of message text.
     # Possible values are "left", "center" and "right".
-    alignment = left
+    alignment = center
 
     # Vertical alignment of message text and icon.
     # Possible values are "top", "center" and "bottom".
@@ -201,7 +201,7 @@
     enable_recursive_icon_lookup = true
 
     # Set icon theme (only used for recursive icon lookup)
-    icon_theme = Adwaita
+    icon_theme = Papirus-Dark
     # You can also set multiple icon themes, with the leftmost one being used first.
     # icon_theme = "Adwaita, breeze"
 
@@ -211,10 +211,10 @@
     # Scale small icons up to this size, set to 0 to disable. Helpful
     # for e.g. small files or high-dpi screens. In case of conflict,
     # max_icon_size takes precedence over this.
-    min_icon_size = 32
+    min_icon_size = 0
 
     # Scale larger icons down to this size, set to 0 to disable
-    max_icon_size = 128
+    max_icon_size = 64 
 
     # Paths to default icons (only neccesary when not using recursive icon lookup)
     icon_path = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
@@ -250,7 +250,7 @@
     # corners.
     # The radius will be automatically lowered if it exceeds half of the
     # notification height to avoid clipping text and/or icons.
-    corner_radius = 0
+    corner_radius = 6 
 
     # Ignore the dbus closeNotification message.
     # Useful to enforce the timeout set by dunst configuration. Without this
@@ -457,3 +457,6 @@
 #    set_stack_tag = "volume"
 #
 # vim: ft=cfg
+[discord-alignment]
+    appname = discord
+    alignment = left
