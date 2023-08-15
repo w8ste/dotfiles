@@ -63,21 +63,21 @@ time_format = "%R" # Hour:Minute Format
 style = "bg:#1d2230"
 format = '[[  $time ](fg:#a0a9cb bg:#1d2230)]($style)'
 
-#[character]
-#success_symbol = "[>](bold green)"
-#error_symbol = "[x](bold red)"
-#vimcmd_symbol = "[<](bold green)"
-#
-#[git_commit]
-#tag_symbol = " tag "
-#
+[character]
+success_symbol = "[ ](bold #796ff0)"
+error_symbol = "[ x](bold red)"
+vimcmd_symbol = "[<](bold green)"
+
+[git_commit]
+tag_symbol = " tag "
+
 #[git_status]
 #ahead = ">"
 #behind = "<"
 #diverged = "<>"
 #renamed = "r"
 #deleted = "x"
-#
+
 #[aws]
 #symbol = "aws "
 #
