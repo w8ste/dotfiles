@@ -62,10 +62,11 @@ bindsym mod1+F11 exec --no-startup-id brightnessctl set 5%-
 
 #screenshot tool (flameshot)
 bindsym $mod+shift+s exec --no-startup-id flameshot gui --raw | xclip -sel clip -t image/png 
-#flameshot gui || killall flameshot
+bindsym $mod+shift+p exec --no-startup-id flameshot gui || killall flameshot
 
-#network managment tool
-bindsym $mod+shift+w exec --no-startup-id alacritty | nmtui
+#set wallpaper
+exec_always --no-startup-id nitrogen --restore &
+
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
@@ -76,11 +77,6 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
-# Set Wallpaper on startup
-exec_always --no-startup-id nitrogen --restore &
-
-# Start picom
-#exec_always --no-startup-id picom
 
 # move tiling windows via drag & drop by left-clicking into the title bar,
 # or left-clicking anywhere into the window while holding the floating modifier.
