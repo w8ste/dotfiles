@@ -9,3 +9,6 @@
 
 ### Fitting wallpapers 
 ![Alt Text](https://github.com/w8ste/screenshots/blob/main/rofi_full.png)
+
+### Neovim Config
+My neovim configuration can be found  ![here](https://github.com/w8ste/nvim)
