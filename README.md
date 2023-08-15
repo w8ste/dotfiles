@@ -39,6 +39,7 @@ Remove the dedicated folders in your `~/.config`and clone/copy this repository t
 mv ~/.config/.bashrc ~
 ```
 Additionally you will have to install a TokyoNight GTK Theme, the TokyoNight and Papirus-Dark icon-theme.
+Additonaly the [Shell Color Script](https://gitlab.com/dwt1/shell-color-scripts) by DistroTube.
 
 ### Rofi Theme
 I made this rofi theme, you can find the configuration [here](https://github.com/w8ste/Tokyonight-rofi-theme).
