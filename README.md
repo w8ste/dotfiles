@@ -38,12 +38,14 @@ Remove the dedicated folders in your `~/.config`and clone/copy this repository t
 ```
 mv ~/.config/.bashrc ~
 ```
+Additionally you will have to install a TokyoNight GTK Theme, the TokyoNight and Papirus-Dark icon-theme.
 
 ### Rofi Theme
+I made this rofi theme, you can find the configuration [here](https://github.com/w8ste/Tokyonight-rofi-theme).
 ![Alt Text](https://github.com/w8ste/screenshots/blob/main/rofi.png)
 
 ### Fitting wallpapers 
-You can find multiple wallpapers, which fit the theme [here](https://github.com/w8ste/dotfiles/tree/main/.wallpaper)
+You can find multiple wallpapers, which fit the theme [here](https://github.com/w8ste/dotfiles/tree/main/.wallpaper).
 
 ![Alt Text](https://github.com/w8ste/screenshots/blob/main/rofi_full.png)
 
@@ -52,4 +54,3 @@ My neovim configuration can be found  ![here](https://github.com/w8ste/nvim)
 
 ### Apppendix 
 - I want to make an install scipt in the future, so i would be happy about a star, if you are interested :)
-- There are credits in the source code for the software, which i have copied from other configs (mainly the spotify module for polybar)
