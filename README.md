@@ -32,6 +32,7 @@ These are the pieces of software i use:
 - tmux
 - betterlockscreen
 - starship
+- Nitrogen
 
 You will also have to install a [Nerd Font](https://www.nerdfonts.com/).
 Remove the dedicated folders in your `~/.config`and clone/copy this repository there.
