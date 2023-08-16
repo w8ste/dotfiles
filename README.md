@@ -3,14 +3,14 @@
 ![Alt Text](https://github.com/w8ste/screenshots/blob/cfd39776e850c7bb34617b145936d45b1576562a/float_nvim.png)
 
 ### Overview:
-- Operating System: Arch
+- Distro: Arch Linux
 - Window Manager: i3wm
 - Status Bar: Polybar
 - Terminal: Alacritty (also Kitty)
 - Launcher: Rofi
 - Notifications: Dunst
 - Compositor: Picom
-- File Manager: ranger
+- File Manager: Ranger
 
 ![Alt Text](https://github.com/w8ste/screenshots/blob/cfd39776e850c7bb34617b145936d45b1576562a/nfetch.png)
 
@@ -32,6 +32,7 @@ These are the pieces of software i use:
 - tmux
 - betterlockscreen
 - starship
+- Nitrogen
 
 You will also have to install a [Nerd Font](https://www.nerdfonts.com/).
 Remove the dedicated folders in your `~/.config`and clone/copy this repository there.
