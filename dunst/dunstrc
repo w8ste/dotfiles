@@ -412,7 +412,6 @@
 #[espeak]
 #    summary = "*"
 #    script = dunst_espeak.sh
-
 #[script-test]
 #    summary = "*script*"
 #    script = dunst_test.sh
@@ -460,3 +459,7 @@
 [discord-alignment]
     appname = discord
     alignment = left
+
+[spotify-alignment]
+    appname = spotify 
+    alginment = left
