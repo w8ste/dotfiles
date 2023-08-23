@@ -11,4 +11,4 @@ configuration{
     display-run: " ";
     display-window: " ";
 }
-@theme "/usr/share/rofi/themes/tokyonight.rasi"
+@theme "/usr/share/rofi/themes/tokyonight_big2.rasi"
