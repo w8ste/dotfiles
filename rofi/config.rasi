@@ -10,7 +10,21 @@ configuration{
     display-drun: " ";
     display-run: " ";
     display-window: " ";
-}
-//@theme "/usr/share/rofi/themes/tokyonight_big2.rasi"
-//@theme "/usr/share/rofi/themes/tokyonight_big1.rasi"
-@theme "/usr/share/rofi/themes/tokyonight.rasi"
+    
+    //adding vim keybindings
+    kb-row-up: "Up,Control+k";
+    kb-row-left: "Left,Control+h";
+    kb-row-right: "Right,Control+l";
+    kb-row-down: "Down,Control+j";
+
+    kb-accept-entry: "Control+z,Control+y,Return,KP_Enter";
+
+    //fixing up
+    kb-remove-to-eol: "";
+    kb-move-char-back: "Control+b";
+    kb-remove-char-back: "BackSpace";
+    kb-move-char-forward: "Control+f";
+    kb-mode-complete: "Control+o";
+    }
+//@theme "/usr/share/rofi/themes/tokyonight.rasi"
+@theme "/usr/share/rofi/themes/tokyonight_big2.rasi"
