@@ -2,5 +2,5 @@
 	path = nvim
     url = https://github.com/w8ste/nvim.git
 [submodule "emacs"]
-    path = emacs
-    url = https://github.com/w8ste/emacs
+	path = emacs
+	url = https://github.com/w8ste/emacs
