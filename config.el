@@ -135,15 +135,17 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
-;;(use-package linum-relative
-    ;;:ensure t
-    ;;:after (evil)
-    ;;:config
-    ;;(add-hook 'prog-mode-hook 'linum-on)
-    ;;(linum-relative-global-mode))
-  (global-display-line-numbers-mode 1)
-(setq display-line-numbers-type 'relative)l
-     (global-visual-line-mode t)
+(global-display-line-numbers-mode 1)
+(setq display-line-numbers-type 'relative)
+(global-visual-line-mode t)
+
+(use-package toc-org
+    :commands toc-org-enable
+    :init (add-hook 'org-mode-hook 'toc-org-enable))
+
+(add-hook 'org-mode-hook 'org-indent-mode)
+(use-package org-bullets)
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
 (use-package which-key
 :init

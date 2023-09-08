@@ -2,6 +2,20 @@
 #+AUTHOR: w8ste
 #+STARTUP: showerverything
 #+OPTIONS: toc:2
+* TABLE OF CONTENTS :toc:
+- [[#important-programs][Important programs]]
+  - [[#load-elpaca][Load Elpaca]]
+  - [[#load-evil-mode][Load Evil Mode]]
+- [[#fonts][FONTS]]
+  - [[#settings-the-font-face][Settings The Font Face]]
+- [[#gui-settings][GUI Settings]]
+  - [[#disable-menubar-toolbars-and-scrollbars][Disable Menubar, Toolbars and Scrollbars]]
+  - [[#display-line-numbers-and-truncated-lines][Display Line Numbers and truncated Lines]]
+- [[#org-mode][Org Mode]]
+  - [[#enable-toc][Enable ToC]]
+  - [[#enable-bullet-points][Enable bullet points]]
+- [[#which-key][WHICH-KEY]]
+
 * Important programs
 ** Load Elpaca
 #+begin_src emacs-lisp
@@ -167,10 +181,21 @@
     (global-visual-line-mode t)
 #+end_src
 
-#+RESULTS:
-: t
+* Org Mode
+** Enable ToC
+#+begin_src emacs-lisp
+(use-package toc-org
+    :commands toc-org-enable
+    :init (add-hook 'org-mode-hook 'toc-org-enable))
+#+end_src
 
-*WHICH-KEY
+** Enable bullet points
+#+begin_src emacs-lisp
+(add-hook 'org-mode-hook 'org-indent-mode)
+(use-package org-bullets)
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+#+end_src
+* WHICH-KEY
 #+begin_src emacs-lisp
   (use-package which-key
   :init
@@ -189,5 +214,3 @@
 	  which-key-allow-imprecise-window-fit t
 	  which-key-separator " → " ))
 #+end_src
-
-#+RESULTS:
