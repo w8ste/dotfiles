@@ -1,0 +1,24 @@
+#    -*- mode: org -*-
+
+
+Archived entries from file /home/hannes/.config/emacs/config.org
+
+
+* Keybindings
+:PROPERTIES:
+:ARCHIVE_TIME: 2023-09-08 Fri 01:02
+:ARCHIVE_FILE: ~/.config/emacs/config.org
+:ARCHIVE_OLPATH: Important programs
+:ARCHIVE_CATEGORY: config
+:END:
+#+begin_src emacs-lisp
+
+  (use-package general
+  :config
+  (general-evil-setup)
+
+  (general-create-definer w8ste/control
+	:prefix "<C>" )
+  (w8ste/control
+  	"c" '(evil-insert-state-map))
+#+end_src
