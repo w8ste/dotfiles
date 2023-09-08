@@ -87,17 +87,57 @@
       :config
       (general-evil-setup)
        ;; set up 'SPC' as the global leader key
-    (general-create-definer dt/leader-keys
+    (general-create-definer w8ste/leader-keys
       :states '(normal insert visual emacs)
       :keymaps 'override
       :prefix "SPC" ;; set leader
       :global-prefix "M-SPC") ;; access leader in insert mode
 
-    (dt/leader-keys
+    (w8ste/leader-keys
       "b" '(:ignore t :wk "buffer")
-      "c" '(evil-normal-state :wk "Switch buffer")
+      "bb" '(switch-to-buffer :wk "Switch buffer")
       "bk" '(kill-this-buffer :wk "Kill this buffer")
       "bn" '(next-buffer :wk "Next buffer")
       "bp" '(previous-buffer :wk "Previous buffer")
       "br" '(revert-buffer :wk "Reload buffer"))
 )
+
+(set-face-attribute 'default nil
+  :font "JetBrains Mono"
+  :height 110
+  :weight 'medium)
+(set-face-attribute 'variable-pitch nil
+  :font "Monospace"
+  :height 120
+  :weight 'medium)
+(set-face-attribute 'fixed-pitch nil
+  :font "JetBrains Mono"
+  :height 110
+  :weight 'medium)
+;; Makes commented text and keywords italics.
+;; This is working in emacsclient but not emacs.
+;; Your font must have an italic face available.
+(set-face-attribute 'font-lock-comment-face nil
+
+		    :slant 'italic)
+(set-face-attribute 'font-lock-keyword-face nil
+  :slant 'italic)
+
+;; This sets the default font on all graphical frames created after restarting Emacs.
+;; Does the same thing as 'set-face-attribute default' above, but emacsclient fonts
+;; are not right unless I also add this method of setting the default font.
+(add-to-list 'default-frame-alist '(font . "JetBrains Mono-11"))
+
+;; Uncomment the following line if line spacing needs adjusting.
+(setq-default line-spacing 0.12)
+
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+
+(use-package linum-relative
+  :ensure t
+  :after (evil)
+  :config
+  (add-hook 'prog-mode-hook 'linum-on)
+  (linum-relative-global-mode))
