@@ -4,7 +4,7 @@
 
 ### Overview:
 - Distro: Arch Linux
-- Window Manager: i3wm
+- Window Manager: i3wm 
 - Status Bar: Polybar
 - Terminal: Alacritty (also Kitty)
 - Launcher: Rofi
