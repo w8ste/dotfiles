@@ -1,4 +1,3 @@
-
 #           _nnnn_                      
 #         dGGGGMMb     ,"""""""""""""".
 #         @p~qp~~qMb    | Linux Rules! |
@@ -102,6 +101,9 @@ bindsym mod1+n exec --no-startup-id nemo &
 
 # launch firefox 
 bindsym mod1+f exec --no-startup-id firefox &
+
+#
+bindsym mod1+e exec --no-startup-id emacs &
 
 # change focus (vim keybindings)
 bindsym $mod+h focus left
