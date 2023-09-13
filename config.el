@@ -105,6 +105,7 @@
  (w8ste/leader-keys
   "f c" '((lambda () (interactive) (find-file "~/.config/emacs/config.org")) :wk "Edit emacs config")
   "fr" '(counsel-recentf :wk "Find recent files")
+  "pf" '(projectile-find-file :wk "Find file in current project")
   "TAB TAB" '(comment-line :wk "Comment lines"))
 
   ;; eval keybindings
@@ -129,16 +130,16 @@
  ;; Setting RETURN key in org-mode to follow links
    (setq org-return-follows-link  t)
 
-(use-package elcord
-  :init
-  (elcord-mode))
-
 (use-package all-the-icons
   :ensure t
   :if (display-graphic-p))
 
 (use-package all-the-icons-dired
   :hook (dired-mode . (lambda () (all-the-icons-dired-mode t))))
+
+(use-package elcord
+  :init
+  (elcord-mode))
 
 (set-face-attribute 'default nil
   :font "JetBrains Mono"
@@ -217,6 +218,11 @@
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
 (require 'org-tempo)
+
+(use-package projectile
+  :config
+ (projectile-mode +1)
+ (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 
 (use-package sudo-edit
   :config

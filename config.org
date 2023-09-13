@@ -7,18 +7,19 @@
   - [[#load-elpaca][Load Elpaca]]
   - [[#load-evil-mode][Load Evil Mode]]
   - [[#general-keybindings][General Keybindings]]
-- [[#disord-status][Disord status]]
 - [[#all-the-icons][All the icons]]
+- [[#disord-status][Disord status]]
 - [[#fonts][FONTS]]
   - [[#settings-the-font-face][Settings The Font Face]]
 - [[#gui-settings][GUI Settings]]
   - [[#disable-menubar-toolbars-and-scrollbars][Disable Menubar, Toolbars and Scrollbars]]
   - [[#display-line-numbers-and-truncated-lines][Display Line Numbers and truncated Lines]]
-- [[#ivy-counsel][IVY (Counsel]]
+- [[#ivy-counsel][IVY (Counsel)]]
 - [[#org-mode][Org Mode]]
   - [[#enable-toc][Enable ToC]]
   - [[#enable-bullet-points][Enable bullet points]]
   - [[#disable-electric-indent][Disable electric indent]]
+- [[#projectile][Projectile]]
 - [[#sudo-edit][Sudo Edit]]
 - [[#which-key][WHICH-KEY]]
 
@@ -140,6 +141,7 @@
    (w8ste/leader-keys
     "f c" '((lambda () (interactive) (find-file "~/.config/emacs/config.org")) :wk "Edit emacs config")
     "fr" '(counsel-recentf :wk "Find recent files")
+    "pf" '(projectile-find-file :wk "Find file in current project")
     "TAB TAB" '(comment-line :wk "Comment lines"))
 
     ;; eval keybindings
@@ -165,13 +167,6 @@
      (setq org-return-follows-link  t)
 #+end_src
 
-* Disord status
-#+begin_src emacs-lisp
-  (use-package elcord
-    :init
-    (elcord-mode))
-#+end_src
-
 * All the icons
 #+begin_src emacs-lisp
   (use-package all-the-icons
@@ -180,8 +175,15 @@
 
   (use-package all-the-icons-dired
     :hook (dired-mode . (lambda () (all-the-icons-dired-mode t))))
-
 #+end_src
+
+* Disord status
+#+begin_src emacs-lisp
+  (use-package elcord
+    :init
+    (elcord-mode))
+#+end_src
+
 * FONTS
 ** Settings The Font Face
 #+begin_src emacs-lisp
@@ -229,7 +231,7 @@
     (global-visual-line-mode t)
 #+end_src
 
-* IVY (Counsel
+* IVY (Counsel)
 #+begin_src emacs-lisp
  (use-package counsel
   :after ivy
@@ -286,6 +288,15 @@
 
 #+begin_src emacs-lisp
   (require 'org-tempo)
+#+end_src
+
+* Projectile
+Projectile is a project interaction library for Emacs.
+#+begin_src emacs-lisp
+  (use-package projectile
+    :config
+   (projectile-mode +1)
+   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)) 
 #+end_src
 
 * Sudo Edit
