@@ -104,6 +104,7 @@
  ;; quality of life keybindings
  (w8ste/leader-keys
   "f c" '((lambda () (interactive) (find-file "~/.config/emacs/config.org")) :wk "Edit emacs config")
+  "fr" '(counsel-recentf :wk "Find recent files")
   "TAB TAB" '(comment-line :wk "Comment lines"))
 
   ;; eval keybindings
@@ -127,6 +128,17 @@
  )
  ;; Setting RETURN key in org-mode to follow links
    (setq org-return-follows-link  t)
+
+(use-package elcord
+  :init
+  (elcord-mode))
+
+(use-package all-the-icons
+  :ensure t
+  :if (display-graphic-p))
+
+(use-package all-the-icons-dired
+  :hook (dired-mode . (lambda () (all-the-icons-dired-mode t))))
 
 (set-face-attribute 'default nil
   :font "JetBrains Mono"
@@ -164,6 +176,38 @@
 (setq display-line-numbers-type 'relative)
 (global-visual-line-mode t)
 
+(use-package counsel
+  :after ivy
+  :config (counsel-mode))
+
+(use-package ivy
+  :bind
+  ;; ivy-resume resumes the last Ivy-based completion.
+  (("C-c C-r" . ivy-resume)
+   ("C-x B" . ivy-switch-buffer-other-window))
+  :custom
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-count-format "(%d/%d) ")
+  (setq enable-recursive-minibuffers t)
+  :config
+  (ivy-mode))
+
+(use-package all-the-icons-ivy-rich
+  :ensure t
+  :init (all-the-icons-ivy-rich-mode 1))
+
+(use-package ivy-rich
+  :after ivy
+  :ensure t
+  :init (ivy-rich-mode 1) ;; this gets us descriptions in M-x.
+  :custom
+  (ivy-virtual-abbreviate 'full
+   ivy-rich-switch-buffer-align-virtual-buffer t
+   ivy-rich-path-style 'abbrev)
+  :config
+  (ivy-set-display-transformer 'ivy-switch-buffer
+                               'ivy-rich-switch-buffer-transformer))
+
 (use-package toc-org
     :commands toc-org-enable
     :init (add-hook 'org-mode-hook 'toc-org-enable))
@@ -171,6 +215,14 @@
 (add-hook 'org-mode-hook 'org-indent-mode)
 (use-package org-bullets)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+
+(require 'org-tempo)
+
+(use-package sudo-edit
+  :config
+  (w8ste/leader-keys
+    "fu" '(sudo-edit-find-file :wk "Sudo find file")
+    "fU" '(sudo-edit :wk "Sudo edit file")))
 
 (use-package which-key
 :init
@@ -188,7 +240,3 @@
 	which-key-max-description-length 25
 	which-key-allow-imprecise-window-fit t
 	which-key-separator " → " ))
-
-(use-package elcord
-  :init
-  (elcord-mode))
