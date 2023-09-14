@@ -48,7 +48,10 @@ exec --no-startup-id ~/.config/pad.sh
 exec --no-startup-id picom -b
 
 # launch spotify on startup
-exec --no-startup-id flatpak run com.spotify.Client  
+exec --no-startup-id flatpak run com.spotify.Client &
+
+# launch discord on startuü
+exec --no-startup-id discord & 
 
 # launch dunst
 exec --no-startup-id dunst &
@@ -75,11 +78,6 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
-
-
-# move tiling windows via drag & drop by left-clicking into the title bar,
-# or left-clicking anywhere into the window while holding the floating modifier.
-#tiling_drag modifier titlebar
 
 # start a terminal
 bindsym $mod+Return exec --no-startup-id alacritty
