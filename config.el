@@ -342,7 +342,8 @@ one, an error is signaled."
  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 
 (use-package rainbow-mode
-  :hook
+  :diminish
+  :hook 
   ((org-mode prog-mode) . rainbow-mode))
 
 (use-package eshell-syntax-highlighting

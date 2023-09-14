@@ -435,9 +435,10 @@ Projectile is a project interaction library for Emacs.
 
 * Rainbow mode
 #+begin_src emacs-lisp
-    (use-package rainbow-mode
-      :hook
-      ((org-mode prog-mode) . rainbow-mode))
+(use-package rainbow-mode
+  :diminish
+  :hook 
+  ((org-mode prog-mode) . rainbow-mode))
 #+end_src
 
 * Shells and Terminals
