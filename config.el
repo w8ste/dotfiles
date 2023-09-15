@@ -181,6 +181,10 @@
   :defer t
   :ensure t)
 
+(use-package smartparens
+  :init
+  (smartparens-global-strict-mode))
+
 (require 'windmove)
 
 ;;;###autoload
@@ -271,6 +275,8 @@ one, an error is signaled."
   :config
   (dashboard-setup-startup-hook))
 
+(use-package diminish)
+
 (use-package elcord
   :init
   (elcord-mode))
@@ -303,6 +309,12 @@ one, an error is signaled."
 ;; Uncomment the following line if line spacing needs adjusting.
 (setq-default line-spacing 0.12)
 
+(use-package flycheck
+ :ensure t
+ :defer t
+ :diminish
+ :init (global-flycheck-mode))
+
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
@@ -313,9 +325,11 @@ one, an error is signaled."
 
 (use-package counsel
   :after ivy
+  :diminish
   :config (counsel-mode))
 
 (use-package ivy
+  :diminish
   :bind
   ;; ivy-resume resumes the last Ivy-based completion.
   (("C-c C-r" . ivy-resume)

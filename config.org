@@ -9,11 +9,14 @@
   - [[#general-keybindings][General Keybindings]]
 - [[#all-the-icons][All the icons]]
 - [[#auctex][AUCTex]]
+- [[#autopairs][Autopairs]]
 - [[#buffer-move][Buffer-Move]]
 - [[#dashboard][Dashboard]]
+- [[#diminish][Diminish]]
 - [[#disord-status][Disord status]]
 - [[#fonts][FONTS]]
   - [[#settings-the-font-face][Settings The Font Face]]
+- [[#flycheck][Flycheck]]
 - [[#gui-settings][GUI Settings]]
   - [[#disable-menubar-toolbars-and-scrollbars][Disable Menubar, Toolbars and Scrollbars]]
   - [[#display-line-numbers-and-truncated-lines][Display Line Numbers and truncated Lines]]
@@ -235,6 +238,13 @@
       :ensure t)
 #+end_src
 
+* Autopairs
+#+begin_src emacs-lisp
+      (use-package smartparens
+        :init
+        (smartparens-global-strict-mode))
+#+end_src
+
 * Buffer-Move
 #+begin_src emacs-lisp
  (require 'windmove)
@@ -330,6 +340,13 @@ one, an error is signaled."
   :config
   (dashboard-setup-startup-hook))
 #+end_src
+
+* Diminish
+Option that implements hiding of minor-modes in the modeline
+#+begin_src emacs-lisp
+  (use-package diminish)
+#+end_src
+
 * Disord status
 #+begin_src emacs-lisp
   (use-package elcord
@@ -369,6 +386,15 @@ one, an error is signaled."
     (setq-default line-spacing 0.12)
 #+end_src
 
+* Flycheck
+#+begin_src emacs-lisp
+ (use-package flycheck
+  :ensure t
+  :defer t
+  :diminish
+  :init (global-flycheck-mode)) 
+#+end_src
+
 * GUI Settings
 ** Disable Menubar, Toolbars and Scrollbars
 #+begin_src emacs-lisp
@@ -386,37 +412,39 @@ one, an error is signaled."
 
 * IVY (Counsel)
 #+begin_src emacs-lisp
- (use-package counsel
-  :after ivy
-  :config (counsel-mode))
+   (use-package counsel
+    :after ivy
+    :diminish
+    :config (counsel-mode))
 
-(use-package ivy
-  :bind
-  ;; ivy-resume resumes the last Ivy-based completion.
-  (("C-c C-r" . ivy-resume)
-   ("C-x B" . ivy-switch-buffer-other-window))
-  :custom
-  (setq ivy-use-virtual-buffers t)
-  (setq ivy-count-format "(%d/%d) ")
-  (setq enable-recursive-minibuffers t)
-  :config
-  (ivy-mode))
+  (use-package ivy
+    :diminish
+    :bind
+    ;; ivy-resume resumes the last Ivy-based completion.
+    (("C-c C-r" . ivy-resume)
+     ("C-x B" . ivy-switch-buffer-other-window))
+    :custom
+    (setq ivy-use-virtual-buffers t)
+    (setq ivy-count-format "(%d/%d) ")
+    (setq enable-recursive-minibuffers t)
+    :config
+    (ivy-mode))
 
-(use-package all-the-icons-ivy-rich
-  :ensure t
-  :init (all-the-icons-ivy-rich-mode 1))
+  (use-package all-the-icons-ivy-rich
+    :ensure t
+    :init (all-the-icons-ivy-rich-mode 1))
 
-(use-package ivy-rich
-  :after ivy
-  :ensure t
-  :init (ivy-rich-mode 1) ;; this gets us descriptions in M-x.
-  :custom
-  (ivy-virtual-abbreviate 'full
-   ivy-rich-switch-buffer-align-virtual-buffer t
-   ivy-rich-path-style 'abbrev)
-  :config
-  (ivy-set-display-transformer 'ivy-switch-buffer
-                               'ivy-rich-switch-buffer-transformer))
+  (use-package ivy-rich
+    :after ivy
+    :ensure t
+    :init (ivy-rich-mode 1) ;; this gets us descriptions in M-x.
+    :custom
+    (ivy-virtual-abbreviate 'full
+     ivy-rich-switch-buffer-align-virtual-buffer t
+     ivy-rich-path-style 'abbrev)
+    :config
+    (ivy-set-display-transformer 'ivy-switch-buffer
+                                 'ivy-rich-switch-buffer-transformer))
 #+end_src
 
 * Language Support
