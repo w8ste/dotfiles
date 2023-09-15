@@ -18,6 +18,7 @@
   - [[#disable-menubar-toolbars-and-scrollbars][Disable Menubar, Toolbars and Scrollbars]]
   - [[#display-line-numbers-and-truncated-lines][Display Line Numbers and truncated Lines]]
 - [[#ivy-counsel][IVY (Counsel)]]
+- [[#language-support][Language Support]]
 - [[#org-mode][Org Mode]]
   - [[#enable-toc][Enable ToC]]
   - [[#enable-bullet-points][Enable bullet points]]
@@ -30,6 +31,7 @@
   - [[#vterm-toggle][Vterm-toggle]]
 - [[#sudo-edit][Sudo Edit]]
 - [[#theme][Theme]]
+- [[#treesitter][Treesitter]]
 - [[#which-key][WHICH-KEY]]
 
 * Important programs
@@ -126,77 +128,94 @@
 
 ** General Keybindings
 #+begin_src emacs-lisp
-    (use-package general
-      :config
-      (general-evil-setup)
-      ;; set up 'SPC' as the global leader key
-      (general-create-definer w8ste/leader-keys
-        :states '(normal insert visual emacs)
-        :keymaps 'override
-        :prefix "SPC" ;; set leader
-        :global-prefix "M-SPC") ;; access leader in insert mode
+  (use-package general
+    :config
+    (general-evil-setup)
+    ;; set up 'SPC' as the global leader key
+    (general-create-definer w8ste/leader-keys
+      :states '(normal insert visual emacs)
+      :keymaps 'override
+      :prefix "SPC" ;; set leader
+      :global-prefix "M-SPC") ;; access leader in insert mode
 
-      ;; buffer keybindings
-      (w8ste/leader-keys
-        "b" '(:ignore t :wk "buffer")
-        "bb" '(switch-to-buffer :wk "Switch buffer")
-        "bk" '(kill-this-buffer :wk "Kill this buffer")
-        "bi" '(ibuffer :wk "Ibuffer")
-        "bn" '(next-buffer :wk "Next buffer")
-        "bp" '(previous-buffer :wk "Previous buffer")
-        "br" '(revert-buffer :wk "Reload buffer"))
+    ;; buffer keybindings
+    (w8ste/leader-keys
+      "b" '(:ignore t :wk "buffer")
+      "bb" '(switch-to-buffer :wk "Switch buffer")
+      "bk" '(kill-this-buffer :wk "Kill this buffer")
+      "bi" '(ibuffer :wk "Ibuffer")
+      "bn" '(next-buffer :wk "Next buffer")
+      "bp" '(previous-buffer :wk "Previous buffer")
+      "br" '(revert-buffer :wk "Reload buffer"))
 
-      ;; quality of life keybindings
-      (w8ste/leader-keys
-        "f c" '((lambda () (interactive) (find-file "~/.config/emacs/config.org")) :wk "Edit emacs config")
-        "fr" '(counsel-recentf :wk "Find recent files")
-        "pf" '(projectile-find-file :wk "Find file in current project")
-        "TAB TAB" '(comment-line :wk "Comment lines"))
+    ;; quality of life keybindings
+    (w8ste/leader-keys
+      "f c" '((lambda () (interactive) (find-file "~/.config/emacs/config.org")) :wk "Edit emacs config")
+      "fr" '(counsel-recentf :wk "Find recent files")
+      "pf" '(projectile-find-file :wk "Find file in current project")
+      "TAB TAB" '(comment-line :wk "Comment lines"))
 
-      ;; eval keybindings
-      (w8ste/leader-keys
-        "e" '(:ignore t :wk "Evaluate/Eshell")    
-        "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
-        "e d" '(eval-defun :wk "Evaluate defun containing or after point")
-        "e e" '(eval-expression :wk "Evaluate and elisp expression")
-        "e l" '(eval-last-sexp :wk "Evaluate elisp expression before point")
-        "e r" '(eval-region :wk "Evaluate elisp in region")
-        "es" '(eshell :wk "Eshell")
-        "eh" '(counsel-esh-history :wk "Eshell history"))
+    ;; eval keybindings
+    (w8ste/leader-keys
+      "e" '(:ignore t :wk "Evaluate/Eshell")    
+      "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
+      "e d" '(eval-defun :wk "Evaluate defun containing or after point")
+      "e e" '(eval-expression :wk "Evaluate and elisp expression")
+      "e l" '(eval-last-sexp :wk "Evaluate elisp expression before point")
+      "e r" '(eval-region :wk "Evaluate elisp in region")
+      "es" '(eshell :wk "Eshell")
+      "eh" '(counsel-esh-history :wk "Eshell history"))
 
-      (w8ste/leader-keys
-        "h" '(:ignore t :wk "Help")
-        "h f" '(describe-function :wk "Describe function")
-        "h v" '(describe-variable :wk "Describe variable"))
+    (w8ste/leader-keys
+      "h" '(:ignore t :wk "Help")
+      "h f" '(describe-function :wk "Describe function")
+      "h v" '(describe-variable :wk "Describe variable"))
 
-      ;; Keybindings for splits
-      (w8ste/leader-keys
-        "w" '(:ignore t :wk "Windows")
-        ;; Window splits
-        "w c" '(evil-window-delete :wk "Close window")
-        "w n" '(evil-window-new :wk "New window")
-        "w s" '(evil-window-split :wk "Horizontal split window")
-        "w v" '(evil-window-vsplit :wk "Vertical split window")
-        ;; Window motions
-        "w h" '(evil-window-left :wk "Window left")
-        "w j" '(evil-window-down :wk "Window down")
-        "w k" '(evil-window-up :wk "Window up")
-        "w l" '(evil-window-right :wk "Window right")
-        "w w" '(evil-window-next :wk "Goto next window")
-        ;; Move Windows
-        "w H" '(buf-move-left :wk "Buffer move left")
-        "w J" '(buf-move-down :wk "Buffer move down")
-        "w K" '(buf-move-up :wk "Buffer move up")
-        "w L" '(buf-move-right :wk "Buffer move right"))
+    ;; Keybindings for splits
+    (w8ste/leader-keys
+      "w" '(:ignore t :wk "Windows")
+      ;; Window splits
+      "w c" '(evil-window-delete :wk "Close window")
+      "w n" '(evil-window-new :wk "New window")
+      "w s" '(evil-window-split :wk "Horizontal split window")
+      "w v" '(evil-window-vsplit :wk "Vertical split window")
+      ;; Window motions
+      "w h" '(evil-window-left :wk "Window left")
+      "w j" '(evil-window-down :wk "Window down")
+      "w k" '(evil-window-up :wk "Window up")
+      "w l" '(evil-window-right :wk "Window right")
+      "w w" '(evil-window-next :wk "Goto next window")
+      ;; Move Windows
+      "w H" '(buf-move-left :wk "Buffer move left")
+      "w J" '(buf-move-down :wk "Buffer move down")
+      "w K" '(buf-move-up :wk "Buffer move up")
+      "w L" '(buf-move-right :wk "Buffer move right"))
 
-      (w8ste/leader-keys
-        "t" '(:ignore t :wk "Toggle")
-        "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
-        "t t" '(visual-line-mode :wk "Toggle truncated lines")
-        "tv" '(vterm-toggle :wk "Toggle vterm"))
-      )
-    ;; Setting RETURN key in org-mode to follow links
-    (setq org-return-follows-link  t)
+    (w8ste/leader-keys
+      "m" '(:ignore t :wk "Org")
+      "m a" '(org-agenda :wk "Org agenda")
+      "m e" '(org-export-dispatch :wk "Org export dispatch")
+      "m i" '(org-toggle-item :wk "Org toggle item")
+      "m t" '(org-todo :wk "Org todo")
+      "m B" '(org-babel-tangle :wk "Org babel tangle")
+      "m T" '(org-todo-list :wk "Org todo list"))
+
+    (w8ste/leader-keys
+      "m d" '(:ignore t :wk "Date/deadline")
+      "m d t" '(org-time-stamp :wk "Org time stamp"))
+
+    (w8ste/leader-keys
+    "m b" '(:ignore t :wk "Tables")
+    "m b -" '(org-table-insert-hline :wk "Insert hline in table")) 
+
+    (w8ste/leader-keys
+      "t" '(:ignore t :wk "Toggle")
+      "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
+      "t t" '(visual-line-mode :wk "Toggle truncated lines")
+      "tv" '(vterm-toggle :wk "Toggle vterm"))
+    )
+  ;; Setting RETURN key in org-mode to follow links
+  (setq org-return-follows-link  t)
 #+end_src
 
 * All the icons
@@ -299,7 +318,7 @@ one, an error is signaled."
   (setq dashboard-banner-logo-title "Emacs Is More Than A Text Editor!")
   ;;(setq dashboard-startup-banner 'logo) ;; use standard emacs logo as banner
   (setq dashboard-startup-banner "~/.config/emacs/images/emacs-dash.png")  ;; use custom image as banner
-  (setq dashboard-center-content nil) ;; set to 't' for centered content
+  (setq dashboard-center-content t) ;; set to 't' for centered content
   (setq dashboard-items '((recents . 5)
                           (agenda . 5 )
                           (bookmarks . 3)
@@ -400,6 +419,13 @@ one, an error is signaled."
                                'ivy-rich-switch-buffer-transformer))
 #+end_src
 
+* Language Support
+#+begin_src emacs-lisp
+  ;;lua
+  (use-package lua-mode)
+  ;;haskell
+  (use-package haskell-mode)
+#+end_src
 * Org Mode
 ** Enable ToC
 #+begin_src emacs-lisp
@@ -418,6 +444,7 @@ one, an error is signaled."
 ** Disable electric indent
 #+begin_src emacs_lisp
 (electric-indent-mode -1)
+(setq org-edit-src-content-indention 1)
 #+end_src
 
 #+begin_src emacs-lisp
@@ -505,9 +532,17 @@ Helps toggling vterm
 * Theme
 #+begin_src emacs-lisp
   (add-to-list 'custom-theme-load-path "~/.config/emacs/themes/")
-  (load-theme 'tokyo t)
+  (load-theme 'tokyo-night t)
 #+end_src
 
+* Treesitter
+#+begin_src emacs-lisp
+  (use-package tree-sitter
+    :init
+    (global-tree-sitter-mode)
+    (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+    (use-package tree-sitter-langs)
+#+end_src
 * WHICH-KEY
 #+begin_src emacs-lisp
   (use-package which-key
@@ -524,7 +559,7 @@ Helps toggling vterm
 	  which-key-side-window-max-height 0.25
 	  which-key-idle-delay 0.8
 	  which-key-max-description-length 25
-	  which-key-allow-imprecise-window-fit t
+	  which-key-allow-imprecise-window-fit nil 
 	  which-key-separator " → " ))
 #+end_src
 
