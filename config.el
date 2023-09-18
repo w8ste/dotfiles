@@ -178,12 +178,15 @@
   :hook (dired-mode . (lambda () (all-the-icons-dired-mode t))))
 
 (use-package auctex
+  :ensure t
   :defer t
-  :ensure t)
+  :hook (LaTeX-mode . (lambda ()
+			(push (list 'output-pdf "Zathura")
+			      TeX-view-program-selection))))
 
 (use-package smartparens
   :init
-  (smartparens-global-strict-mode))
+  (smartparens-global-mode))
 
 (require 'windmove)
 
@@ -351,20 +354,38 @@ one, an error is signaled."
   :init (ivy-rich-mode 1) ;; this gets us descriptions in M-x.
   :custom
   (ivy-virtual-abbreviate 'full
-   ivy-rich-switch-buffer-align-virtual-buffer t
-   ivy-rich-path-style 'abbrev)
+                          ivy-rich-switch-buffer-align-virtual-buffer t
+                          ivy-rich-path-style 'abbrev)
   :config
   (ivy-set-display-transformer 'ivy-switch-buffer
                                'ivy-rich-switch-buffer-transformer))
 
-;;lua
-(use-package lua-mode)
-;;haskell
-(use-package haskell-mode)
+(use-package lsp-mode
+  :commands (lsp lsp-deferred)
+  :init
+  (setq lsp-keymap-prefix "C-c l")
+  :hook (lsp-after-apply-edits-hook t)
+  :config
+  '(lsp-enable-whichkey-integration t))
+
+(use-package lsp-ui
+  :init
+  (setq lsp-ui-sideline-enable t)
+  (setq lsp-ui-sideline-show-hover nil)
+  (setq lsp-ui-doc-position 'bottom)
+  (lsp-ui-doc-show))
+
+(use-package auto-complete
+  :ensure t
+  :init
+  (setq global-auto-complete t))
+
+(use-package lsp-java
+  :hook (java-mode . lsp-deferred))
 
 (use-package toc-org
-    :commands toc-org-enable
-    :init (add-hook 'org-mode-hook 'toc-org-enable))
+  :commands toc-org-enable
+  :init (add-hook 'org-mode-hook 'toc-org-enable))
 
 (add-hook 'org-mode-hook 'org-indent-mode)
 (use-package org-bullets)

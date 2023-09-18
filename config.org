@@ -9,7 +9,7 @@
   - [[#general-keybindings][General Keybindings]]
 - [[#all-the-icons][All the icons]]
 - [[#auctex][AUCTex]]
-- [[#autopairs][Autopairs]]
+- [[#autopair][Autopair]]
 - [[#buffer-move][Buffer-Move]]
 - [[#dashboard][Dashboard]]
 - [[#diminish][Diminish]]
@@ -22,6 +22,9 @@
   - [[#display-line-numbers-and-truncated-lines][Display Line Numbers and truncated Lines]]
 - [[#ivy-counsel][IVY (Counsel)]]
 - [[#language-support][Language Support]]
+  - [[#lsp-mode][Lsp mode]]
+  - [[#auto-completion][Auto completion]]
+  - [[#java][Java]]
 - [[#org-mode][Org Mode]]
   - [[#enable-toc][Enable ToC]]
   - [[#enable-bullet-points][Enable bullet points]]
@@ -233,16 +236,19 @@
 
 * AUCTex
 #+begin_src emacs-lisp
-    (use-package auctex
-      :defer t
-      :ensure t)
+(use-package auctex
+  :ensure t
+  :defer t
+  :hook (LaTeX-mode . (lambda ()
+			(push (list 'output-pdf "Zathura")
+			      TeX-view-program-selection))))
 #+end_src
 
-* Autopairs
+* Autopair
 #+begin_src emacs-lisp
       (use-package smartparens
         :init
-        (smartparens-global-strict-mode))
+        (smartparens-global-mode))
 #+end_src
 
 * Buffer-Move
@@ -412,7 +418,7 @@ Option that implements hiding of minor-modes in the modeline
 
 * IVY (Counsel)
 #+begin_src emacs-lisp
-   (use-package counsel
+  (use-package counsel
     :after ivy
     :diminish
     :config (counsel-mode))
@@ -440,24 +446,51 @@ Option that implements hiding of minor-modes in the modeline
     :init (ivy-rich-mode 1) ;; this gets us descriptions in M-x.
     :custom
     (ivy-virtual-abbreviate 'full
-     ivy-rich-switch-buffer-align-virtual-buffer t
-     ivy-rich-path-style 'abbrev)
+                            ivy-rich-switch-buffer-align-virtual-buffer t
+                            ivy-rich-path-style 'abbrev)
     :config
     (ivy-set-display-transformer 'ivy-switch-buffer
                                  'ivy-rich-switch-buffer-transformer))
-#+end_src
+    #+end_src
 
 * Language Support
+** Lsp mode
 #+begin_src emacs-lisp
-  ;;lua
-  (use-package lua-mode)
-  ;;haskell
-  (use-package haskell-mode)
+  (use-package lsp-mode
+    :commands (lsp lsp-deferred)
+    :init
+    (setq lsp-keymap-prefix "C-c l")
+    :hook (lsp-after-apply-edits-hook t)
+    :config
+    '(lsp-enable-whichkey-integration t))
+
+  (use-package lsp-ui
+    :init
+    (setq lsp-ui-sideline-enable t)
+    (setq lsp-ui-sideline-show-hover nil)
+    (setq lsp-ui-doc-position 'bottom)
+    (lsp-ui-doc-show))
+
 #+end_src
+
+** Auto completion
+#+begin_src emacs-lisp
+            (use-package auto-complete
+              :ensure t
+              :init
+              (setq global-auto-complete t))
+#+end_src
+
+** Java
+#+begin_src emacs-lisp
+      (use-package lsp-java
+        :hook (java-mode . lsp-deferred))
+#+end_src
+
 * Org Mode
 ** Enable ToC
 #+begin_src emacs-lisp
-(use-package toc-org
+  (use-package toc-org
     :commands toc-org-enable
     :init (add-hook 'org-mode-hook 'toc-org-enable))
 #+end_src
