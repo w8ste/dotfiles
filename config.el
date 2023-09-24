@@ -59,6 +59,7 @@
   ;;(elpaca nil (message "deferred"))
 
 (use-package evil
+  :bind (:map evil-insert-state-map ("C-k" . nil)) 
   :init
   (setq evil-want-integration t)
   (setq evil-want-keybinding nil)
@@ -78,9 +79,11 @@
 (define-key evil-visual-state-map (kbd "C-c") 'evil-normal-state)
 (define-key evil-insert-state-map (kbd "C-c") 'evil-normal-state)
 (define-key evil-motion-state-map (kbd "C-e") nil)
+(define-key evil-insert-state-map (kbd "C-k") nil)
 (define-key evil-visual-state-map (kbd "C-c") 'evil-exit-visual-state)
 (define-key evil-motion-state-map (kbd "TAB") nil))
 
+(keymap-global-set "C-c k" 'kill-line)
 (use-package general
   :config
   (general-evil-setup)
@@ -166,6 +169,8 @@
     "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
     "t t" '(visual-line-mode :wk "Toggle truncated lines")
     "tv" '(vterm-toggle :wk "Toggle vterm"))
+
+
   )
 ;; Setting RETURN key in org-mode to follow links
 (setq org-return-follows-link  t)
@@ -364,21 +369,64 @@ one, an error is signaled."
   :commands (lsp lsp-deferred)
   :init
   (setq lsp-keymap-prefix "C-c l")
+  :hook (c++-mode . lsp-deferred) 
+  :hook (java-mode . lsp-deferred) 
   :hook (lsp-after-apply-edits-hook t)
   :config
-  '(lsp-enable-whichkey-integration t))
+  '(lsp-enable-whichkey-integration t)
+  (lsp))
 
 (use-package lsp-ui
   :init
   (setq lsp-ui-sideline-enable t)
   (setq lsp-ui-sideline-show-hover nil)
-  (setq lsp-ui-doc-position 'bottom)
-  (lsp-ui-doc-show))
+  (setq lsp-ui-doc-position 'bottom))
 
-(use-package auto-complete
-  :ensure t
-  :init
-  (setq global-auto-complete t))
+(use-package corfu
+   ;; Optional customizations
+   :custom
+   (corfu-cycle t)                 ; Allows cycling through candidates
+   (corfu-auto t)                  ; Enable auto completion
+   (corfu-auto-prefix 2)
+   (corfu-auto-delay 0.0)
+   (corfu-popupinfo-delay 0.0)
+   (corfu-preview-current 'insert) ; Do not preview current candidate
+   (corfu-preselect 'prompt)
+   (corfu-on-exact-match nil)      ; Don't auto expand tempel snippets
+
+   ;; Optionally use TAB for cycling, default is `corfu-complete'.
+   :bind (:map corfu-map
+               ("M-SPC"      . corfu-insert-separator)
+               ("C-j"        . corfu-next)
+               ([tab]        . corfu-next)
+               ("C-k"      . corfu-previous)
+               ("C-z" . corfu-insert)
+               ("C-ü" . corfu-popupinfo-documentation)
+               ("RET"        . nil))
+
+   :init
+   (global-corfu-mode)
+   (corfu-history-mode)
+    (setq corfu-popupinfo-delay 0.2)
+   (corfu-popupinfo-mode) ; Popup completion info
+   :config
+   (add-hook 'eshell-mode-hook
+             (lambda () (setq-local corfu-quit-at-boundary t
+                               corfu-quit-no-match t
+                               corfu-auto nil)
+               (corfu-mode))))
+
+(use-package kind-icon
+ :after corfu
+ :custom
+ (kind-icon-use-icons t)
+ (kind-icon-default-face 'corfu-default) ; Have background color be the same as `corfu' face background
+ (kind-icon-blend-background nil)  ; Use midpoint color between foreground and background colors ("blended")?
+ (kind-icon-blend-frac 0.08)
+ ;;(svg-lib-icons-dir (no-littering-expand-var-file-name "svg-lib/cache/")) ; Change cache dir
+ :config
+ (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter) ; Enable `kind-icon'
+ (add-hook 'kb/themes-hooks #'(lambda () (interactive) (kind-icon-reset-cache))))
 
 (use-package lsp-java
   :hook (java-mode . lsp-deferred))
