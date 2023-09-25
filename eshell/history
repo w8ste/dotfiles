@@ -15,3 +15,5 @@ cd ..
 git commit -m "Update emacs"
 git push origin main
 exit
+exa -lh
+ls

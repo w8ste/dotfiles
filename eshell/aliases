@@ -1,0 +1,5 @@
+alias ls exa -lh --color=always --group-directories-first $*
+alias lh exa -lah --color=always --group-directories-first $*
+alias ll ls -alF
+alias la ls -A
+alias l ls -da
