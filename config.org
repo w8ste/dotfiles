@@ -43,13 +43,15 @@
   - [[#disable-electric-indent][Disable electric indent]]
 - [[#perspective][Perspective]]
 - [[#projectile][Projectile]]
-- [[#rainbow-mode][Rainbow mode]]
+- [[#rainbow-delimiters][Rainbow Delimiters]]
+- [[#rainbow-mode][Rainbow Mode]]
 - [[#shells-and-terminals][Shells and Terminals]]
   - [[#eshell][Eshell]]
   - [[#vterm][Vterm]]
   - [[#vterm-toggle][Vterm-toggle]]
 - [[#sudo-edit][Sudo Edit]]
 - [[#theme][Theme]]
+- [[#tldr][TLDR]]
 - [[#transparency][Transparency]]
 - [[#treesitter][Treesitter]]
 - [[#which-key][WHICH-KEY]]
@@ -148,149 +150,152 @@
 
 ** General Keybindings
 #+begin_src emacs-lisp
-  (keymap-global-set "C-c k" 'kill-line)
-  (use-package general
-    :config
-    (general-evil-setup)
-    ;; set up 'SPC' as the global leader key
-    (general-create-definer w8ste/leader-keys
-      :states '(normal insert visual emacs)
-      :keymaps 'override
-      :prefix "SPC" ;; set leader
-      :global-prefix "M-SPC") ;; access leader in insert mode
+    (keymap-global-set "C-c k" 'kill-line)
+    (use-package general
+      :config
+      (general-evil-setup)
+      ;; set up 'SPC' as the global leader key
+      (general-create-definer w8ste/leader-keys
+        :states '(normal insert visual emacs)
+        :keymaps 'override
+        :prefix "SPC" ;; set leader
+        :global-prefix "M-SPC") ;; access leader in insert mode
 
-    ;; buffer keybindings
-    (w8ste/leader-keys
-      "b" '(:ignore t :wk "Bookmarks/Buffer")
-      "bb" '(switch-to-buffer :wk "Switch buffer")
-      "bk" '(kill-this-buffer :wk "Kill this buffer")
-      "bi" '(ibuffer :wk "Ibuffer")
-      "bn" '(next-buffer :wk "Next buffer")
-      "bp" '(previous-buffer :wk "Previous buffer")
-      "br" '(revert-buffer :wk "Reload buffer")
-      "b R" '(rename-buffer :wk "Rename buffer")
-      "b s" '(basic-save-buffer :wk "Save buffer")
-      "b S" '(save-some-buffers :wk "Save multiple buffers") 
-      ;; Bookmarks
-      "b d" '(bookmark-delete :wk "Delete bookmark")
-      "b l" '(list-bookmarks :wk "List bookmarks")
-      "b m" '(bookmark-set :wk "Set bookmark"))
+      ;; buffer keybindings
+      (w8ste/leader-keys
+        "b" '(:ignore t :wk "Bookmarks/Buffer")
+        "bb" '(switch-to-buffer :wk "Switch buffer")
+        "bk" '(kill-this-buffer :wk "Kill this buffer")
+        "bi" '(ibuffer :wk "Ibuffer")
+        "bn" '(next-buffer :wk "Next buffer")
+        "bp" '(previous-buffer :wk "Previous buffer")
+        "br" '(revert-buffer :wk "Reload buffer")
+        "b R" '(rename-buffer :wk "Rename buffer")
+        "b s" '(basic-save-buffer :wk "Save buffer")
+        "b S" '(save-some-buffers :wk "Save multiple buffers") 
+        ;; Bookmarks
+        "b d" '(bookmark-delete :wk "Delete bookmark")
+        "b l" '(list-bookmarks :wk "List bookmarks")
+        "b m" '(bookmark-set :wk "Set bookmark"))
 
-    ;; quality of life keybindings
-    (w8ste/leader-keys
-      "f c" '((lambda () (interactive) (find-file "~/.config/emacs/config.org")) :wk "Edit emacs config")
-      "fr" '(counsel-recentf :wk "Find recent files")
-      "pf" '(projectile-find-file :wk "Find file in current project")
-      "=" '(perspective-map :wk "Perspective") 
-      "TAB TAB" '(comment-line :wk "Comment lines"))
+      ;; quality of life keybindings
+      (w8ste/leader-keys
+        "f c" '((lambda () (interactive) (find-file "~/.config/emacs/config.org")) :wk "Edit emacs config")
+        "fr" '(counsel-recentf :wk "Find recent files")
+        "pf" '(projectile-find-file :wk "Find file in current project")
+        "=" '(perspective-map :wk "Perspective") 
+        "TAB TAB" '(comment-line :wk "Comment lines"))
 
-    ;; eval keybindings
-    (w8ste/leader-keys
-      "e" '(:ignore t :wk "Evaluate/Eshell")    
-      "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
-      "e d" '(eval-defun :wk "Evaluate defun containing or after point")
-      "e e" '(eval-expression :wk "Evaluate and elisp expression")
-      "e l" '(eval-last-sexp :wk "Evaluate elisp expression before point")
-      "e r" '(eval-region :wk "Evaluate elisp in region")
-      "es" '(eshell :wk "Eshell")
-      "eh" '(counsel-esh-history :wk "Eshell history"))
+      ;; eval keybindings
+      (w8ste/leader-keys
+        "e" '(:ignore t :wk "Evaluate/Eshell")    
+        "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
+        "e d" '(eval-defun :wk "Evaluate defun containing or after point")
+        "e e" '(eval-expression :wk "Evaluate and elisp expression")
+        "e l" '(eval-last-sexp :wk "Evaluate elisp expression before point")
+        "e r" '(eval-region :wk "Evaluate elisp in region")
+        "es" '(eshell :wk "Eshell")
+        "eh" '(counsel-esh-history :wk "Eshell history"))
 
-    ;; Dired
-    (w8ste/leader-keys
-      "d" '(:ignore t :wk "Dired")
-      "d d" '(dired :wk "Open dired")
-      "d j" '(dired-jump :wk "Dired jump to current")
-      "d n" '(neotree-dir :wk "Open directory in neotree")
-      "d p" '(peep-dired :wk "Peep-dired")) 
+      ;; Dired
+      (w8ste/leader-keys
+        "d" '(:ignore t :wk "Dired")
+        "d d" '(dired :wk "Open dired")
+        "d j" '(dired-jump :wk "Dired jump to current")
+        "d n" '(neotree-dir :wk "Open directory in neotree")
+        "d p" '(peep-dired :wk "Peep-dired")) 
 
-    ;; Help keybindigs
-    (w8ste/leader-keys
-      "h" '(:ignore t :wk "Help")
-      "h a" '(counsel-apropos :wk "Apropos")
-      "h b" '(describe-bindings :wk "Describe bindings")
-      "h c" '(describe-char :wk "Describe character under cursor")
-      "h d" '(:ignore t :wk "Emacs documentation")
-      "h d a" '(about-emacs :wk "About Emacs")
-      "h d d" '(view-emacs-debugging :wk "View Emacs debugging")
-      "h d f" '(view-emacs-FAQ :wk "View Emacs FAQ")
-      "h d m" '(info-emacs-manual :wk "The Emacs manual")
-      "h d n" '(view-emacs-news :wk "View Emacs news")
-      "h d o" '(describe-distribution :wk "How to obtain Emacs")
-      "h d p" '(view-emacs-problems :wk "View Emacs problems")
-      "h d t" '(view-emacs-todo :wk "View Emacs todo")
-      "h d w" '(describe-no-warranty :wk "Describe no warranty")
-      "h e" '(view-echo-area-messages :wk "View echo area messages")
-      "h f" '(describe-function :wk "Describe function")
-      "h F" '(describe-face :wk "Describe face")
-      "h g" '(describe-gnu-project :wk "Describe GNU Project")
-      "h i" '(info :wk "Info")
-      "h I" '(describe-input-method :wk "Describe input method")
-      "h k" '(describe-key :wk "Describe key")
-      "h l" '(view-lossage :wk "Display recent keystrokes and the commands run")
-      "h L" '(describe-language-environment :wk "Describe language environment")
-      "h m" '(describe-mode :wk "Describe mode")
-      "h r" '(:ignore t :wk "Reload")
-      "h r r" '((lambda () (interactive)
-                  (load-file "~/.config/emacs/init.el")
-                  (ignore (elpaca-process-queues)))
-                :wk "Reload emacs config")
-      "h t" '(load-theme :wk "Load theme")
-      "h v" '(describe-variable :wk "Describe variable")
-      "h w" '(where-is :wk "Prints keybinding for command if set")
-      "h x" '(describe-command :wk "Display full documentation for command"))
+      ;; Help keybindigs
+      (w8ste/leader-keys
+        "h" '(:ignore t :wk "Help")
+        "h a" '(counsel-apropos :wk "Apropos")
+        "h b" '(describe-bindings :wk "Describe bindings")
+        "h c" '(describe-char :wk "Describe character under cursor")
+        "h d" '(:ignore t :wk "Emacs documentation")
+        "h d a" '(about-emacs :wk "About Emacs")
+        "h d d" '(view-emacs-debugging :wk "View Emacs debugging")
+        "h d f" '(view-emacs-FAQ :wk "View Emacs FAQ")
+        "h d m" '(info-emacs-manual :wk "The Emacs manual")
+        "h d n" '(view-emacs-news :wk "View Emacs news")
+        "h d o" '(describe-distribution :wk "How to obtain Emacs")
+        "h d p" '(view-emacs-problems :wk "View Emacs problems")
+        "h d t" '(view-emacs-todo :wk "View Emacs todo")
+        "h d w" '(describe-no-warranty :wk "Describe no warranty")
+        "h e" '(view-echo-area-messages :wk "View echo area messages")
+        "h f" '(describe-function :wk "Describe function")
+        "h F" '(describe-face :wk "Describe face")
+        "h g" '(describe-gnu-project :wk "Describe GNU Project")
+        "h i" '(info :wk "Info")
+        "h I" '(describe-input-method :wk "Describe input method")
+        "h k" '(describe-key :wk "Describe key")
+        "h l" '(view-lossage :wk "Display recent keystrokes and the commands run")
+        "h L" '(describe-language-environment :wk "Describe language environment")
+        "h m" '(describe-mode :wk "Describe mode")
+        "h r" '(:ignore t :wk "Reload")
+        "h r r" '((lambda () (interactive)
+                    (load-file "~/.config/emacs/init.el")
+                    (ignore (elpaca-process-queues)))
+                  :wk "Reload emacs config")
+        "h t" '(load-theme :wk "Load theme")
+        "h v" '(describe-variable :wk "Describe variable")
+        "h w" '(where-is :wk "Prints keybinding for command if set")
+        "h x" '(describe-command :wk "Display full documentation for command"))
 
-    ;; Keybindings for splits
-    (w8ste/leader-keys
-      "w" '(:ignore t :wk "Windows")
-      ;; Window splits
-      "w c" '(evil-window-delete :wk "Close window")
-      "w n" '(evil-window-new :wk "New window")
-      "w s" '(evil-window-split :wk "Horizontal split window")
-      "w v" '(evil-window-vsplit :wk "Vertical split window")
-      ;; Window motions
-      "w h" '(evil-window-left :wk "Window left")
-      "w j" '(evil-window-down :wk "Window down")
-      "w k" '(evil-window-up :wk "Window up")
-      "w l" '(evil-window-right :wk "Window right")
-      "w w" '(evil-window-next :wk "Goto next window")
-      ;; Move Windows
-      "w H" '(buf-move-left :wk "Buffer move left")
-      "w J" '(buf-move-down :wk "Buffer move down")
-      "w K" '(buf-move-up :wk "Buffer move up")
-      "w L" '(buf-move-right :wk "Buffer move right"))
+      ;; Keybindings for splits
+      (w8ste/leader-keys
+        "w" '(:ignore t :wk "Windows")
+        ;; Window splits
+        "w c" '(evil-window-delete :wk "Close window")
+        "w n" '(evil-window-new :wk "New window")
+        "w s" '(evil-window-split :wk "Horizontal split window")
+        "w v" '(evil-window-vsplit :wk "Vertical split window")
+        ;; Window motions
+        "w h" '(evil-window-left :wk "Window left")
+        "w j" '(evil-window-down :wk "Window down")
+        "w k" '(evil-window-up :wk "Window up")
+        "w l" '(evil-window-right :wk "Window right")
+        "w w" '(evil-window-next :wk "Goto next window")
+        ;; Move Windows
+        "w H" '(buf-move-left :wk "Buffer move left")
+        "w J" '(buf-move-down :wk "Buffer move down")
+        "w K" '(buf-move-up :wk "Buffer move up")
+        "w L" '(buf-move-right :wk "Buffer move right"))
 
-    (w8ste/leader-keys
-      "m" '(:ignore t :wk "Org")
-      "m a" '(org-agenda :wk "Org agenda")
-      "m e" '(org-export-dispatch :wk "Org export dispatch")
-      "m i" '(org-toggle-item :wk "Org toggle item")
-      "m t" '(org-todo :wk "Org todo")
-      "m B" '(org-babel-tangle :wk "Org babel tangle")
-      "m T" '(org-todo-list :wk "Org todo list"))
+      (w8ste/leader-keys
+        "m" '(:ignore t :wk "Org")
+        "m a" '(org-agenda :wk "Org agenda")
+        "m e" '(org-export-dispatch :wk "Org export dispatch")
+        "m i" '(org-toggle-item :wk "Org toggle item")
+        "m t" '(org-todo :wk "Org todo")
+        "m B" '(org-babel-tangle :wk "Org babel tangle")
+        "m T" '(org-todo-list :wk "Org todo list"))
 
-    (w8ste/leader-keys
-      "m d" '(:ignore t :wk "Date/deadline")
-      "m d t" '(org-time-stamp :wk "Org time stamp"))
+      (w8ste/leader-keys
+        "m d" '(:ignore t :wk "Date/deadline")
+        "m d t" '(org-time-stamp :wk "Org time stamp"))
 
-    (w8ste/leader-keys
-      "m b" '(:ignore t :wk "Tables")
-      "m b -" '(org-table-insert-hline :wk "Insert hline in table")) 
+      (w8ste/leader-keys
+        "m b" '(:ignore t :wk "Tables")
+        "m b -" '(org-table-insert-hline :wk "Insert hline in table")
+        "m g" '(magit :wk "Magit")) 
 
-    (w8ste/leader-keys
-      "t" '(:ignore t :wk "Toggle")
-      "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
-      "t t" '(visual-line-mode :wk "Toggle truncated lines")
-      "tv" '(vterm-toggle :wk "Toggle vterm"))
+      (w8ste/leader-keys
+        "t" '(:ignore t :wk "Toggle")
+        "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
+        "t t" '(visual-line-mode :wk "Toggle truncated lines")
+        "t r" '(rainbow-mode :wk "Toggle rainbow mode")
+        "t d" '(tldr :wk "TLDR")
+        "t v" '(vterm-toggle :wk "Toggle vterm"))
 
-    ;; NeoTree
-    (w8ste/leader-keys
-      "n" '(:ignore t :wk "Neotree")
-      "nt" '(neotree-toggle :wk "Toggle Neotree")
-      "nc" '(neotree-create-node :wk "Create File")
-      "nd" '(neotree-delete-node :wk "Delete File"))
-    )
-  ;; Setting RETURN key in org-mode to follow links
-  (setq org-return-follows-link  t)
+      ;; NeoTree
+      (w8ste/leader-keys
+        "n" '(:ignore t :wk "Neotree")
+        "nt" '(neotree-toggle :wk "Toggle Neotree")
+        "nc" '(neotree-create-node :wk "Create File")
+        "nd" '(neotree-delete-node :wk "Delete File"))
+      )
+    ;; Setting RETURN key in org-mode to follow links
+    (setq org-return-follows-link  t)
 #+end_src
 
 * All the icons
@@ -792,7 +797,14 @@ Projectile is a project interaction library for Emacs.
     (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)) 
 #+end_src
 
-* Rainbow mode
+* Rainbow Delimiters
+#+begin_src emacs-lisp
+  (use-package rainbow-delimiters
+    :hook ((emacs-lisp-mode . rainbow-delimiters-mode)
+           (clojure-mode . rainbow-delimiters-mode)))
+#+end_src
+
+* Rainbow Mode
 #+begin_src emacs-lisp
 (use-package rainbow-mode
   :diminish
@@ -880,6 +892,11 @@ Helps toggling vterm
   (doom-themes-treemacs-config)
   ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config))
+#+end_src
+
+* TLDR
+#+begin_src emacs-lisp
+  (use-package tldr)
 #+end_src
 
 * Transparency

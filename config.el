@@ -208,13 +208,16 @@
 
   (w8ste/leader-keys
     "m b" '(:ignore t :wk "Tables")
-    "m b -" '(org-table-insert-hline :wk "Insert hline in table")) 
+    "m b -" '(org-table-insert-hline :wk "Insert hline in table")
+    "m g" '(magit :wk "Magit")) 
 
   (w8ste/leader-keys
     "t" '(:ignore t :wk "Toggle")
     "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
     "t t" '(visual-line-mode :wk "Toggle truncated lines")
-    "tv" '(vterm-toggle :wk "Toggle vterm"))
+    "t r" '(rainbow-mode :wk "Toggle rainbow mode")
+    "t d" '(tldr :wk "TLDR")
+    "t v" '(vterm-toggle :wk "Toggle vterm"))
 
   ;; NeoTree
   (w8ste/leader-keys
@@ -618,6 +621,10 @@ one, an error is signaled."
   (projectile-mode +1)
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 
+(use-package rainbow-delimiters
+  :hook ((emacs-lisp-mode . rainbow-delimiters-mode)
+         (clojure-mode . rainbow-delimiters-mode)))
+
 (use-package rainbow-mode
   :diminish
   :hook 
@@ -688,6 +695,8 @@ one, an error is signaled."
   (doom-themes-treemacs-config)
   ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config))
+
+(use-package tldr)
 
 (add-to-list 'default-frame-alist '(alpha-background . 90))
 
