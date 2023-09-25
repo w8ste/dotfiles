@@ -79,7 +79,6 @@
 (define-key evil-visual-state-map (kbd "C-c") 'evil-normal-state)
 (define-key evil-insert-state-map (kbd "C-c") 'evil-normal-state)
 (define-key evil-motion-state-map (kbd "C-e") nil)
-(define-key evil-insert-state-map (kbd "C-k") nil)
 (define-key evil-visual-state-map (kbd "C-c") 'evil-exit-visual-state)
 (define-key evil-motion-state-map (kbd "TAB") nil))
 
@@ -379,10 +378,10 @@ one, an error is signaled."
   :commands (lsp lsp-deferred)
   :init
   (setq lsp-keymap-prefix "C-c l")
-  :hook (c++-mode . lsp-deferred) 
-  :hook (java-mode . lsp-deferred) 
   :hook (lsp-after-apply-edits-hook t)
   :config
+  (add-hook 'c++-mode-hook 'lsp)
+  (add-hook 'java-mode-hook 'lsp)
   '(lsp-enable-whichkey-integration t)
   (lsp))
 
@@ -452,9 +451,10 @@ one, an error is signaled."
 (require 'org-tempo)
 
 (use-package projectile
+  :diminish
   :config
- (projectile-mode +1)
- (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
+  (projectile-mode +1)
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 
 (use-package rainbow-mode
   :diminish
@@ -509,8 +509,25 @@ one, an error is signaled."
     "fu" '(sudo-edit-find-file :wk "Sudo find file")
     "fU" '(sudo-edit :wk "Sudo edit file")))
 
-(add-to-list 'custom-theme-load-path "~/.config/emacs/themes/")
-(load-theme 'tokyo-night t)
+(use-package doom-themes
+  :ensure t
+  :config
+  ;; Global settings (defaults)
+  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+        doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  (load-theme 'doom-tokyo-night t)
+
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
+  ;; Enable custom neotree theme (all-the-icons must be installed!)
+  (doom-themes-neotree-config)
+  ;; or for treemacs users
+  (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
+  (doom-themes-treemacs-config)
+  ;; Corrects (and improves) org-mode's native fontification.
+  (doom-themes-org-config))
+
+(add-to-list 'default-frame-alist '(alpha-background . 90))
 
 (use-package tree-sitter
   :init

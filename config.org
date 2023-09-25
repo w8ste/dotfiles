@@ -38,6 +38,7 @@
   - [[#vterm-toggle][Vterm-toggle]]
 - [[#sudo-edit][Sudo Edit]]
 - [[#theme][Theme]]
+- [[#transparency][Transparency]]
 - [[#treesitter][Treesitter]]
 - [[#which-key][WHICH-KEY]]
 
@@ -129,10 +130,8 @@
   (define-key evil-visual-state-map (kbd "C-c") 'evil-normal-state)
   (define-key evil-insert-state-map (kbd "C-c") 'evil-normal-state)
   (define-key evil-motion-state-map (kbd "C-e") nil)
-  (define-key evil-insert-state-map (kbd "C-k") nil)
   (define-key evil-visual-state-map (kbd "C-c") 'evil-exit-visual-state)
   (define-key evil-motion-state-map (kbd "TAB") nil))
-
 #+end_src
 
 ** General Keybindings
@@ -476,22 +475,22 @@ Option that implements hiding of minor-modes in the modeline
 * Language Support
 ** Lsp mode
 #+begin_src emacs-lisp
-    (use-package lsp-mode
-      :commands (lsp lsp-deferred)
-      :init
-      (setq lsp-keymap-prefix "C-c l")
-      :hook (c++-mode . lsp-deferred) 
-      :hook (java-mode . lsp-deferred) 
-      :hook (lsp-after-apply-edits-hook t)
-      :config
-      '(lsp-enable-whichkey-integration t)
-      (lsp))
+  (use-package lsp-mode
+    :commands (lsp lsp-deferred)
+    :init
+    (setq lsp-keymap-prefix "C-c l")
+    :hook (lsp-after-apply-edits-hook t)
+    :config
+    (add-hook 'c++-mode-hook 'lsp)
+    (add-hook 'java-mode-hook 'lsp)
+    '(lsp-enable-whichkey-integration t)
+    (lsp))
 
-    (use-package lsp-ui
-      :init
-      (setq lsp-ui-sideline-enable t)
-      (setq lsp-ui-sideline-show-hover nil)
-      (setq lsp-ui-doc-position 'bottom))
+  (use-package lsp-ui
+    :init
+    (setq lsp-ui-sideline-enable t)
+    (setq lsp-ui-sideline-show-hover nil)
+    (setq lsp-ui-doc-position 'bottom))
 
 #+end_src
 
@@ -579,9 +578,10 @@ Option that implements hiding of minor-modes in the modeline
 Projectile is a project interaction library for Emacs.
 #+begin_src emacs-lisp
   (use-package projectile
+    :diminish
     :config
-   (projectile-mode +1)
-   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)) 
+    (projectile-mode +1)
+    (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)) 
 #+end_src
 
 * Rainbow mode
@@ -655,8 +655,28 @@ Helps toggling vterm
 
 * Theme
 #+begin_src emacs-lisp
-  (add-to-list 'custom-theme-load-path "~/.config/emacs/themes/")
-  (load-theme 'tokyo-night t)
+(use-package doom-themes
+  :ensure t
+  :config
+  ;; Global settings (defaults)
+  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+        doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  (load-theme 'doom-tokyo-night t)
+
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
+  ;; Enable custom neotree theme (all-the-icons must be installed!)
+  (doom-themes-neotree-config)
+  ;; or for treemacs users
+  (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
+  (doom-themes-treemacs-config)
+  ;; Corrects (and improves) org-mode's native fontification.
+  (doom-themes-org-config))
+#+end_src
+
+* Transparency
+#+begin_src emacs-lisp
+  (add-to-list 'default-frame-alist '(alpha-background . 90))
 #+end_src
 
 * Treesitter
