@@ -64,7 +64,7 @@ bindsym mod1+F11 exec --no-startup-id brightnessctl set 5%-
 
 #screenshot tool (flameshot)
 bindsym $mod+shift+s exec --no-startup-id flameshot gui --raw | xclip -sel clip -t image/png 
-bindsym $mod+shift+p exec --no-startup-id flameshot gui || killall flameshot
+bindsym $mod+shift+f exec --no-startup-id flameshot gui || killall flameshot
 
 #set wallpaper
 exec_always --no-startup-id nitrogen --restore &
