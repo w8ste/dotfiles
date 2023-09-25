@@ -20,6 +20,7 @@
 - [[#gui-settings][GUI Settings]]
   - [[#disable-menubar-toolbars-and-scrollbars][Disable Menubar, Toolbars and Scrollbars]]
   - [[#display-line-numbers-and-truncated-lines][Display Line Numbers and truncated Lines]]
+- [[#highlight-indents][Highlight Indents]]
 - [[#ivy-counsel][IVY (Counsel)]]
 - [[#language-support][Language Support]]
   - [[#lsp-mode][Lsp mode]]
@@ -368,33 +369,34 @@ Option that implements hiding of minor-modes in the modeline
 * FONTS
 ** Settings The Font Face
 #+begin_src emacs-lisp
-    (set-face-attribute 'default nil
-      :font "JetBrains Mono"
-      :height 110
-      :weight 'medium)
-    (set-face-attribute 'variable-pitch nil
-      :font "JetBrains Mono"
-      :height 120
-      :weight 'medium)
-    (set-face-attribute 'fixed-pitch nil
-      :font "JetBrains Mono"
-      :height 110
-      :weight 'medium)
-    ;; Makes commented text and keywords italics.
-    ;; This is working in emacsclient but not emacs.
-    ;; Your font must have an italic face available.
-    (set-face-attribute 'font-lock-comment-face nil
-      :slant 'italic)
-    (set-face-attribute 'font-lock-keyword-face nil
-      :slant 'italic)
+  (set-frame-font "JetBrains Mono Medium 19")
+  (set-face-attribute 'default nil
+    :font "JetBrains Mono Medium"
+    :height 110
+    :weight 'medium)
+  (set-face-attribute 'variable-pitch nil
+    :font "JetBrains Mono Medium"
+    :height 120
+    :weight 'medium)
+  (set-face-attribute 'fixed-pitch nil
+    :font "JetBrains Mono Medium"
+    :height 110
+    :weight 'medium)
+  ;; Makes commented text and keywords italics.
+  ;; This is working in emacsclient but not emacs.
+  ;; Your font must have an italic face available.
+  (set-face-attribute 'font-lock-comment-face nil
+    :slant 'italic)
+  (set-face-attribute 'font-lock-keyword-face nil
+    :slant 'italic)
 
-    ;; This sets the default font on all graphical frames created after restarting Emacs.
-    ;; Does the same thing as 'set-face-attribute default' above, but emacsclient fonts
-    ;; are not right unless I also add this method of setting the default font.
-    (add-to-list 'default-frame-alist '(font . "JetBrains Mono-11"))
+  ;; This sets the default font on all graphical frames created after restarting Emacs.
+  ;; Does the same thing as 'set-face-attribute default' above, but emacsclient fonts
+  ;; are not right unless I also add this method of setting the default font.
+  (add-to-list 'default-frame-alist '(font . "JetBrains Mono Medium 12"))
 
-    ;; Uncomment the following line if line spacing needs adjusting.
-    (setq-default line-spacing 0.12)
+  ;; Uncomment the following line if line spacing needs adjusting.
+  (setq-default line-spacing 0.12)
 #+end_src
 
 * Flycheck
@@ -419,6 +421,19 @@ Option that implements hiding of minor-modes in the modeline
     (global-display-line-numbers-mode 1)
     (setq display-line-numbers-type 'relative)
     (global-visual-line-mode t)
+#+end_src
+
+* Highlight Indents
+#+begin_src emacs-lisp
+  (use-package highlight-indent-guides
+    :config
+    (set-face-background 'highlight-indent-guides-odd-face "darkgray")
+    (set-face-background 'highlight-indent-guides-even-face "dimgray")
+    (set-face-foreground 'highlight-indent-guides-character-face "dimgray")
+    (add-hook 'c++-mode-hook 'highlight-indent-guides-mode)
+    (add-hook 'java-mode-hook 'highlight-indent-guides-mode)
+    (add-hook 'prog-mode-hook 'highlight-indent-guides-mode))
+
 #+end_src
 
 * IVY (Counsel)
