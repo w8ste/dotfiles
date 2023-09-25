@@ -13,6 +13,7 @@
 - [[#buffer-move][Buffer-Move]]
 - [[#dashboard][Dashboard]]
 - [[#diminish][Diminish]]
+- [[#dired][Dired]]
 - [[#disord-status][Disord status]]
 - [[#fonts][FONTS]]
   - [[#settings-the-font-face][Settings The Font Face]]
@@ -26,6 +27,7 @@
   - [[#lsp-mode][Lsp mode]]
   - [[#corfu][Corfu]]
   - [[#java][Java]]
+- [[#neotree][Neotree]]
 - [[#org-mode][Org Mode]]
   - [[#enable-toc][Enable ToC]]
   - [[#enable-bullet-points][Enable bullet points]]
@@ -136,97 +138,112 @@
 
 ** General Keybindings
 #+begin_src emacs-lisp
-    (keymap-global-set "C-c k" 'kill-line)
-    (use-package general
-      :config
-      (general-evil-setup)
-      ;; set up 'SPC' as the global leader key
-      (general-create-definer w8ste/leader-keys
-        :states '(normal insert visual emacs)
-        :keymaps 'override
-        :prefix "SPC" ;; set leader
-        :global-prefix "M-SPC") ;; access leader in insert mode
+           (keymap-global-set "C-c k" 'kill-line)
+           (use-package general
+             :config
+             (general-evil-setup)
+             ;; set up 'SPC' as the global leader key
+             (general-create-definer w8ste/leader-keys
+               :states '(normal insert visual emacs)
+               :keymaps 'override
+               :prefix "SPC" ;; set leader
+               :global-prefix "M-SPC") ;; access leader in insert mode
 
-      ;; buffer keybindings
-      (w8ste/leader-keys
-        "b" '(:ignore t :wk "buffer")
-        "bb" '(switch-to-buffer :wk "Switch buffer")
-        "bk" '(kill-this-buffer :wk "Kill this buffer")
-        "bi" '(ibuffer :wk "Ibuffer")
-        "bn" '(next-buffer :wk "Next buffer")
-        "bp" '(previous-buffer :wk "Previous buffer")
-        "br" '(revert-buffer :wk "Reload buffer"))
+             ;; buffer keybindings
+             (w8ste/leader-keys
+               "b" '(:ignore t :wk "buffer")
+               "bb" '(switch-to-buffer :wk "Switch buffer")
+               "bk" '(kill-this-buffer :wk "Kill this buffer")
+               "bi" '(ibuffer :wk "Ibuffer")
+               "bn" '(next-buffer :wk "Next buffer")
+               "bp" '(previous-buffer :wk "Previous buffer")
+               "br" '(revert-buffer :wk "Reload buffer"))
 
-      ;; quality of life keybindings
-      (w8ste/leader-keys
-        "f c" '((lambda () (interactive) (find-file "~/.config/emacs/config.org")) :wk "Edit emacs config")
-        "fr" '(counsel-recentf :wk "Find recent files")
-        "pf" '(projectile-find-file :wk "Find file in current project")
-        "TAB TAB" '(comment-line :wk "Comment lines"))
+             ;; quality of life keybindings
+             (w8ste/leader-keys
+               "f c" '((lambda () (interactive) (find-file "~/.config/emacs/config.org")) :wk "Edit emacs config")
+               "fr" '(counsel-recentf :wk "Find recent files")
+               "pf" '(projectile-find-file :wk "Find file in current project")
+               "TAB TAB" '(comment-line :wk "Comment lines"))
 
-      ;; eval keybindings
-      (w8ste/leader-keys
-        "e" '(:ignore t :wk "Evaluate/Eshell")    
-        "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
-        "e d" '(eval-defun :wk "Evaluate defun containing or after point")
-        "e e" '(eval-expression :wk "Evaluate and elisp expression")
-        "e l" '(eval-last-sexp :wk "Evaluate elisp expression before point")
-        "e r" '(eval-region :wk "Evaluate elisp in region")
-        "es" '(eshell :wk "Eshell")
-        "eh" '(counsel-esh-history :wk "Eshell history"))
+             ;; eval keybindings
+             (w8ste/leader-keys
+               "e" '(:ignore t :wk "Evaluate/Eshell")    
+               "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
+               "e d" '(eval-defun :wk "Evaluate defun containing or after point")
+               "e e" '(eval-expression :wk "Evaluate and elisp expression")
+               "e l" '(eval-last-sexp :wk "Evaluate elisp expression before point")
+               "e r" '(eval-region :wk "Evaluate elisp in region")
+               "es" '(eshell :wk "Eshell")
+               "eh" '(counsel-esh-history :wk "Eshell history"))
 
-      (w8ste/leader-keys
-        "h" '(:ignore t :wk "Help")
-        "h f" '(describe-function :wk "Describe function")
-        "h v" '(describe-variable :wk "Describe variable"))
+             ;; Dired
+             (w8ste/leader-keys
+              "d" '(:ignore t :wk "Dired")
+              "d d" '(dired :wk "Open dired")
+              "d j" '(dired-jump :wk "Dired jump to current")
+              "d n" '(neotree-dir :wk "Open directory in neotree")
+              "d p" '(peep-dired :wk "Peep-dired")) 
 
-      ;; Keybindings for splits
-      (w8ste/leader-keys
-        "w" '(:ignore t :wk "Windows")
-        ;; Window splits
-        "w c" '(evil-window-delete :wk "Close window")
-        "w n" '(evil-window-new :wk "New window")
-        "w s" '(evil-window-split :wk "Horizontal split window")
-        "w v" '(evil-window-vsplit :wk "Vertical split window")
-        ;; Window motions
-        "w h" '(evil-window-left :wk "Window left")
-        "w j" '(evil-window-down :wk "Window down")
-        "w k" '(evil-window-up :wk "Window up")
-        "w l" '(evil-window-right :wk "Window right")
-        "w w" '(evil-window-next :wk "Goto next window")
-        ;; Move Windows
-        "w H" '(buf-move-left :wk "Buffer move left")
-        "w J" '(buf-move-down :wk "Buffer move down")
-        "w K" '(buf-move-up :wk "Buffer move up")
-        "w L" '(buf-move-right :wk "Buffer move right"))
+             ;; Help keybindigs
+             (w8ste/leader-keys
+               "h" '(:ignore t :wk "Help")
+               "h f" '(describe-function :wk "Describe function")
+               "h t" '(load-theme : wk "Load theme")'
+               "h v" '(describe-variable :wk "Describe variable"))
 
-      (w8ste/leader-keys
-        "m" '(:ignore t :wk "Org")
-        "m a" '(org-agenda :wk "Org agenda")
-        "m e" '(org-export-dispatch :wk "Org export dispatch")
-        "m i" '(org-toggle-item :wk "Org toggle item")
-        "m t" '(org-todo :wk "Org todo")
-        "m B" '(org-babel-tangle :wk "Org babel tangle")
-        "m T" '(org-todo-list :wk "Org todo list"))
+             ;; Keybindings for splits
+             (w8ste/leader-keys
+               "w" '(:ignore t :wk "Windows")
+               ;; Window splits
+               "w c" '(evil-window-delete :wk "Close window")
+               "w n" '(evil-window-new :wk "New window")
+               "w s" '(evil-window-split :wk "Horizontal split window")
+               "w v" '(evil-window-vsplit :wk "Vertical split window")
+               ;; Window motions
+               "w h" '(evil-window-left :wk "Window left")
+               "w j" '(evil-window-down :wk "Window down")
+               "w k" '(evil-window-up :wk "Window up")
+               "w l" '(evil-window-right :wk "Window right")
+               "w w" '(evil-window-next :wk "Goto next window")
+               ;; Move Windows
+               "w H" '(buf-move-left :wk "Buffer move left")
+               "w J" '(buf-move-down :wk "Buffer move down")
+               "w K" '(buf-move-up :wk "Buffer move up")
+               "w L" '(buf-move-right :wk "Buffer move right"))
 
-      (w8ste/leader-keys
-        "m d" '(:ignore t :wk "Date/deadline")
-        "m d t" '(org-time-stamp :wk "Org time stamp"))
+             (w8ste/leader-keys
+               "m" '(:ignore t :wk "Org")
+               "m a" '(org-agenda :wk "Org agenda")
+               "m e" '(org-export-dispatch :wk "Org export dispatch")
+               "m i" '(org-toggle-item :wk "Org toggle item")
+               "m t" '(org-todo :wk "Org todo")
+               "m B" '(org-babel-tangle :wk "Org babel tangle")
+               "m T" '(org-todo-list :wk "Org todo list"))
 
-      (w8ste/leader-keys
-      "m b" '(:ignore t :wk "Tables")
-      "m b -" '(org-table-insert-hline :wk "Insert hline in table")) 
+             (w8ste/leader-keys
+               "m d" '(:ignore t :wk "Date/deadline")
+               "m d t" '(org-time-stamp :wk "Org time stamp"))
 
-      (w8ste/leader-keys
-        "t" '(:ignore t :wk "Toggle")
-        "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
-        "t t" '(visual-line-mode :wk "Toggle truncated lines")
-        "tv" '(vterm-toggle :wk "Toggle vterm"))
+             (w8ste/leader-keys
+               "m b" '(:ignore t :wk "Tables")
+               "m b -" '(org-table-insert-hline :wk "Insert hline in table")) 
 
+             (w8ste/leader-keys
+               "t" '(:ignore t :wk "Toggle")
+               "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
+               "t t" '(visual-line-mode :wk "Toggle truncated lines")
+               "tv" '(vterm-toggle :wk "Toggle vterm"))
 
-      )
-    ;; Setting RETURN key in org-mode to follow links
-    (setq org-return-follows-link  t)
+             ;; NeoTree
+             (w8ste/leader-keys
+               "n" '(:ignore t :wk "Neotree")
+               "nt" '(neotree-toggle :wk "Toggle Neotree")
+               "nc" '(neotree-create-node :wk "Create File")
+               "nd" '(neotree-delete-node :wk "Delete File"))
+             )
+           ;; Setting RETURN key in org-mode to follow links
+           (setq org-return-follows-link  t)
 #+end_src
 
 * All the icons
@@ -356,6 +373,27 @@ one, an error is signaled."
 Option that implements hiding of minor-modes in the modeline
 #+begin_src emacs-lisp
   (use-package diminish)
+#+end_src
+
+* Dired
+#+begin_src emacs-lisp
+ (use-package dired-open
+  :config
+  (setq dired-open-extensions '(("gif" . "sxiv")
+                                ("jpg" . "sxiv")
+                                ("png" . "sxiv")
+                                ("mkv" . "mpv")
+                                ("mp4" . "mpv"))))
+
+(use-package peep-dired
+  :after dired
+  :hook (evil-normalize-keymaps . peep-dired-hook)
+  :config
+    (evil-define-key 'normal dired-mode-map (kbd "h") 'dired-up-directory)
+    (evil-define-key 'normal dired-mode-map (kbd "l") 'dired-open-file) ; use dired-find-file instead if not using dired-open package
+    (evil-define-key 'normal peep-dired-mode-map (kbd "j") 'peep-dired-next-file)
+    (evil-define-key 'normal peep-dired-mode-map (kbd "k") 'peep-dired-prev-file)
+)
 #+end_src
 
 * Disord status
@@ -547,6 +585,26 @@ Option that implements hiding of minor-modes in the modeline
 #+begin_src emacs-lisp
       (use-package lsp-java
         :hook (java-mode . lsp-deferred))
+#+end_src
+
+* Neotree
+#+begin_src emacs-lisp
+  (use-package neotree
+    :config
+    (setq neo-smart-open t
+          neo-show-hidden-files t
+          neo-window-width 55
+          neo-window-fixed-size nil
+          inhibit-compacting-font-caches t
+          projectile-switch-project-action 'neotree-projectile-action) 
+    ;; truncate long file names in neotree
+    (add-hook 'neo-after-create-hook
+              #'(lambda (_)
+                  (with-current-buffer (get-buffer neo-buffer-name)
+                    (setq truncate-lines t)
+                    (setq word-wrap nil)
+                    (make-local-variable 'auto-hscroll-mode)
+                    (setq auto-hscroll-mode nil)))))
 #+end_src
 
 * Org Mode

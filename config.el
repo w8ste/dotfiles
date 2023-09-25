@@ -121,9 +121,19 @@
     "es" '(eshell :wk "Eshell")
     "eh" '(counsel-esh-history :wk "Eshell history"))
 
+  ;; Dired
+  (w8ste/leader-keys
+   "d" '(:ignore t :wk "Dired")
+   "d d" '(dired :wk "Open dired")
+   "d j" '(dired-jump :wk "Dired jump to current")
+   "d n" '(neotree-dir :wk "Open directory in neotree")
+   "d p" '(peep-dired :wk "Peep-dired")) 
+
+  ;; Help keybindigs
   (w8ste/leader-keys
     "h" '(:ignore t :wk "Help")
     "h f" '(describe-function :wk "Describe function")
+    "h t" '(load-theme : wk "Load theme")'
     "h v" '(describe-variable :wk "Describe variable"))
 
   ;; Keybindings for splits
@@ -160,8 +170,8 @@
     "m d t" '(org-time-stamp :wk "Org time stamp"))
 
   (w8ste/leader-keys
-  "m b" '(:ignore t :wk "Tables")
-  "m b -" '(org-table-insert-hline :wk "Insert hline in table")) 
+    "m b" '(:ignore t :wk "Tables")
+    "m b -" '(org-table-insert-hline :wk "Insert hline in table")) 
 
   (w8ste/leader-keys
     "t" '(:ignore t :wk "Toggle")
@@ -169,7 +179,12 @@
     "t t" '(visual-line-mode :wk "Toggle truncated lines")
     "tv" '(vterm-toggle :wk "Toggle vterm"))
 
-
+  ;; NeoTree
+  (w8ste/leader-keys
+    "n" '(:ignore t :wk "Neotree")
+    "nt" '(neotree-toggle :wk "Toggle Neotree")
+    "nc" '(neotree-create-node :wk "Create File")
+    "nd" '(neotree-delete-node :wk "Delete File"))
   )
 ;; Setting RETURN key in org-mode to follow links
 (setq org-return-follows-link  t)
@@ -283,6 +298,24 @@ one, an error is signaled."
   (dashboard-setup-startup-hook))
 
 (use-package diminish)
+
+(use-package dired-open
+  :config
+  (setq dired-open-extensions '(("gif" . "sxiv")
+                                ("jpg" . "sxiv")
+                                ("png" . "sxiv")
+                                ("mkv" . "mpv")
+                                ("mp4" . "mpv"))))
+
+(use-package peep-dired
+  :after dired
+  :hook (evil-normalize-keymaps . peep-dired-hook)
+  :config
+    (evil-define-key 'normal dired-mode-map (kbd "h") 'dired-up-directory)
+    (evil-define-key 'normal dired-mode-map (kbd "l") 'dired-open-file) ; use dired-find-file instead if not using dired-open package
+    (evil-define-key 'normal peep-dired-mode-map (kbd "j") 'peep-dired-next-file)
+    (evil-define-key 'normal peep-dired-mode-map (kbd "k") 'peep-dired-prev-file)
+)
 
 (use-package elcord
   :init
@@ -439,6 +472,23 @@ one, an error is signaled."
 
 (use-package lsp-java
   :hook (java-mode . lsp-deferred))
+
+(use-package neotree
+  :config
+  (setq neo-smart-open t
+        neo-show-hidden-files t
+        neo-window-width 55
+        neo-window-fixed-size nil
+        inhibit-compacting-font-caches t
+        projectile-switch-project-action 'neotree-projectile-action) 
+  ;; truncate long file names in neotree
+  (add-hook 'neo-after-create-hook
+            #'(lambda (_)
+                (with-current-buffer (get-buffer neo-buffer-name)
+                  (setq truncate-lines t)
+                  (setq word-wrap nil)
+                  (make-local-variable 'auto-hscroll-mode)
+                  (setq auto-hscroll-mode nil)))))
 
 (use-package toc-org
   :commands toc-org-enable
