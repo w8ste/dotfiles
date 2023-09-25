@@ -1,3 +1,17 @@
 g++ main.cpp -o main
 main
 ./main
+git status
+git add config.el config.org
+git status
+git status
+git commit -m "Added doom-modeline"
+git push origin main
+cd ..
+git add em
+git add emacs
+git commit
+cd ..
+git commit -m "Update emacs"
+git push origin main
+exit

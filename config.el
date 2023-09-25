@@ -392,6 +392,16 @@ one, an error is signaled."
  :diminish
  :init (global-flycheck-mode))
 
+(use-package git-timemachine
+  :after git-timemachine
+  :hook (evil-normalize-keymaps . git-timemachine-hook)
+  :config
+  (evil-define-key 'normal git-timemachine-mode-map (kbd "C-j") 'git-timemachine-show-previous-revision)
+  (evil-define-key 'normal git-timemachine-mode-map (kbd "C-k") 'git-timemachine-show-next-revision)
+  )
+
+(use-package magit)
+
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
@@ -464,6 +474,7 @@ one, an error is signaled."
   :config
   (add-hook 'c++-mode-hook 'lsp)
   (add-hook 'java-mode-hook 'lsp)
+  (add-hook 'sh-mode-hook 'lsp)
   '(lsp-enable-whichkey-integration t)
   (lsp))
 
@@ -521,6 +532,24 @@ one, an error is signaled."
 
 (use-package lsp-java
   :hook (java-mode . lsp-deferred))
+
+(use-package lsp-pyright
+  :ensure t
+  :hook (python-mode . (lambda ()
+                         (require 'lsp-pyright)
+                         (lsp))))  ; or lsp-deferre
+
+(use-package lua-mode
+  :ensure t
+  :hook (lua-mode . (lambda ()
+                      (require 'lua-mode)
+                      (lsp))))
+
+(use-package verilog-mode
+  :ensure t
+  :hook (verilog-mode . (lambda ()
+                          (require 'verilog-mode)
+                          (lsp))))
 
 (use-package doom-modeline
   :ensure t

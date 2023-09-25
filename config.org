@@ -18,6 +18,9 @@
 - [[#fonts][FONTS]]
   - [[#settings-the-font-face][Settings The Font Face]]
 - [[#flycheck][Flycheck]]
+- [[#git-programms][Git Programms]]
+  - [[#git-time-machine][Git Time Machine]]
+  - [[#magit][Magit]]
 - [[#gui-settings][GUI Settings]]
   - [[#disable-menubar-toolbars-and-scrollbars][Disable Menubar, Toolbars and Scrollbars]]
   - [[#display-line-numbers-and-truncated-lines][Display Line Numbers and truncated Lines]]
@@ -28,6 +31,9 @@
   - [[#lsp-mode][Lsp mode]]
   - [[#corfu][Corfu]]
   - [[#java][Java]]
+  - [[#python][Python]]
+  - [[#lua][Lua]]
+  - [[#system-verilog][System Verilog]]
 - [[#modeline][Modeline]]
 - [[#neotree][Neotree]]
 - [[#org-mode][Org Mode]]
@@ -483,6 +489,22 @@ Option that implements hiding of minor-modes in the modeline
   :init (global-flycheck-mode)) 
 #+end_src
 
+* Git Programms
+** Git Time Machine
+#+begin_src emacs-lisp
+  (use-package git-timemachine
+    :after git-timemachine
+    :hook (evil-normalize-keymaps . git-timemachine-hook)
+    :config
+    (evil-define-key 'normal git-timemachine-mode-map (kbd "C-j") 'git-timemachine-show-previous-revision)
+    (evil-define-key 'normal git-timemachine-mode-map (kbd "C-k") 'git-timemachine-show-next-revision)
+    ) 
+#+end_src
+** Magit
+#+begin_src emacs-lisp
+  (use-package magit)
+#+end_src
+
 * GUI Settings
 ** Disable Menubar, Toolbars and Scrollbars
 #+begin_src emacs-lisp
@@ -575,6 +597,7 @@ Option that implements hiding of minor-modes in the modeline
     :config
     (add-hook 'c++-mode-hook 'lsp)
     (add-hook 'java-mode-hook 'lsp)
+    (add-hook 'sh-mode-hook 'lsp)
     '(lsp-enable-whichkey-integration t)
     (lsp))
 
@@ -641,6 +664,33 @@ Option that implements hiding of minor-modes in the modeline
         :hook (java-mode . lsp-deferred))
 #+end_src
 
+** Python
+#+begin_src emacs-lisp
+  (use-package lsp-pyright
+    :ensure t
+    :hook (python-mode . (lambda ()
+                           (require 'lsp-pyright)
+                           (lsp))))  ; or lsp-deferre
+#+end_src
+
+** Lua
+#+begin_src emacs-lisp
+  (use-package lua-mode
+    :ensure t
+    :hook (lua-mode . (lambda ()
+                        (require 'lua-mode)
+                        (lsp))))
+#+end_src
+
+** System Verilog
+#+begin_src emacs-lisp
+  (use-package verilog-mode
+    :ensure t
+    :hook (verilog-mode . (lambda ()
+                            (require 'verilog-mode)
+                            (lsp))))
+
+#+end_src
 * Modeline
 #+begin_src emacs-lisp
 (use-package doom-modeline
