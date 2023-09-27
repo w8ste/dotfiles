@@ -1,3 +1,6 @@
 [submodule "emacs"]
 	path = emacs
-	url = https://github.com/w8ste/emacs
+    url = https://github.com/w8ste/emacs
+[submodule "nvim"]
+    path = "nvim"
+    url = https://github.com/w8ste/nvim
