@@ -1,4 +1,3 @@
-
 #           _nnnn_                      
 #         dGGGGMMb     ,"""""""""""""".
 #         @p~qp~~qMb    | Linux Rules! |
@@ -49,7 +48,10 @@ exec --no-startup-id ~/.config/pad.sh
 exec --no-startup-id picom -b
 
 # launch spotify on startup
-exec --no-startup-id flatpak run com.spotify.Client  
+exec --no-startup-id flatpak run com.spotify.Client &
+
+# launch discord on startuü
+exec --no-startup-id discord & 
 
 # launch dunst
 exec --no-startup-id dunst &
@@ -62,7 +64,7 @@ bindsym mod1+F11 exec --no-startup-id brightnessctl set 5%-
 
 #screenshot tool (flameshot)
 bindsym $mod+shift+s exec --no-startup-id flameshot gui --raw | xclip -sel clip -t image/png 
-bindsym $mod+shift+p exec --no-startup-id flameshot gui || killall flameshot
+bindsym $mod+shift+f exec --no-startup-id flameshot gui || killall flameshot
 
 #set wallpaper
 exec_always --no-startup-id nitrogen --restore &
@@ -76,11 +78,6 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
-
-
-# move tiling windows via drag & drop by left-clicking into the title bar,
-# or left-clicking anywhere into the window while holding the floating modifier.
-#tiling_drag modifier titlebar
 
 # start a terminal
 bindsym $mod+Return exec --no-startup-id alacritty
@@ -102,6 +99,9 @@ bindsym mod1+n exec --no-startup-id nemo &
 
 # launch firefox 
 bindsym mod1+f exec --no-startup-id firefox &
+
+# launch emacs
+bindsym mod1+e exec --no-startup-id ~/.config/scripts/emacs-open.sh &
 
 # change focus (vim keybindings)
 bindsym $mod+h focus left

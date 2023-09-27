@@ -44,7 +44,9 @@ Additonaly the [Shell Color Script](https://gitlab.com/dwt1/shell-color-scripts)
 
 ### Rofi Theme
 I made this rofi theme, you can find the configuration [here](https://github.com/w8ste/Tokyonight-rofi-theme).
-![Alt Text](https://github.com/w8ste/screenshots/blob/main/rofi.png)
+
+### Ranger 
+For icons in ranger to work, you will need to install [ranger-devicons](https://github.com/alexanderjeurissen/ranger_devicons)
 
 ### Fitting wallpapers 
 You can find multiple wallpapers, which fit the theme [here](https://github.com/w8ste/dotfiles/tree/main/.wallpaper).
@@ -56,3 +58,4 @@ My neovim configuration can be found  ![here](https://github.com/w8ste/nvim)
 
 ### Apppendix 
 - I want to make an install scipt in the future, so i would be happy about a star, if you are interested :)
+- I also need to update my screenshots ;D
