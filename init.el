@@ -12,7 +12,8 @@
  '(custom-theme-directory "~/.config/emacs/elpaca/builds/doom-themes/")
  '(evil-toggle-key "")
  '(highlight-indent-guides-auto-enabled nil)
- '(highlight-indent-guides-method 'character))
+ '(highlight-indent-guides-method 'character)
+ '(package-selected-packages '(lua-mode auctex)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

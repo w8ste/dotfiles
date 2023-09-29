@@ -34,6 +34,7 @@
   - [[#python][Python]]
   - [[#lua][Lua]]
   - [[#system-verilog][System Verilog]]
+  - [[#ltex][Ltex]]
 - [[#minibuffer-escape][Minibuffer Escape]]
 - [[#modeline][Modeline]]
 - [[#neotree][Neotree]]
@@ -318,12 +319,14 @@
 
 * AUCTex
 #+begin_src emacs-lisp
-(use-package auctex
-  :ensure t
-  :defer t
-  :hook (LaTeX-mode . (lambda ()
-			(push (list 'output-pdf "Zathura")
-			      TeX-view-program-selection))))
+  (use-package auctex
+    :ensure t
+    :defer t
+    :hook (LaTeX-mode . (lambda ()
+                          (push (list 'output-pdf "Zathura")
+                                TeX-view-program-selection))))
+(setq TeX-auto-save t)
+(setq TeX-parse-self t)
 #+end_src
 
 * Autopair
@@ -614,6 +617,7 @@ Option that implements hiding of minor-modes in the modeline
     (add-hook 'c++-mode-hook 'lsp)
     (add-hook 'java-mode-hook 'lsp)
     (add-hook 'sh-mode-hook 'lsp)
+    (add-hook 'tex-mode-hook 'lsp)
     '(lsp-enable-whichkey-integration t)
     (lsp))
 
@@ -706,6 +710,17 @@ Option that implements hiding of minor-modes in the modeline
                             (require 'verilog-mode)
                             (lsp))))
 
+#+end_src
+
+** Ltex
+#+begin_src emacs-lisp
+  (use-package lsp-ltex
+    :ensure t
+    :hook (text-mode . (lambda ()
+                         (require 'lsp-ltex)
+                         (lsp)))  ; or lsp-deferred
+    :init
+    (setq lsp-ltex-version "15.2.0"))  ; make sure you have set this, see below 
 #+end_src
 
 * Minibuffer Escape

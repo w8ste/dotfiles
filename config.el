@@ -112,11 +112,19 @@
 
   ;; quality of life keybindings
   (w8ste/leader-keys
-    "f c" '((lambda () (interactive) (find-file "~/.config/emacs/config.org")) :wk "Edit emacs config")
-    "fr" '(counsel-recentf :wk "Find recent files")
-    "pf" '(projectile-find-file :wk "Find file in current project")
-    "=" '(perspective-map :wk "Perspective") 
     "TAB TAB" '(comment-line :wk "Comment lines"))
+
+  (w8ste/leader-keys
+    "f c" '((lambda () (interactive) (find-file "~/.config/emacs/config.org")) :wk "Edit emacs config")
+    "f r" '(counsel-recentf :wk "Find recent files"))
+
+  ;; navigating through you 
+  (w8ste/leader-keys
+    "p" '(:ignore :wk "Navigation")'
+    "p r" '(counsel-recentf :wk "Find recent files")
+    "p f" '(projectile-find-file :wk "Find file in current project")
+    "p =" '(perspective-map :wk "Perspective") 
+    "p s" '(rgrep :wk "Find regex"))
 
   ;; eval keybindings
   (w8ste/leader-keys
@@ -237,11 +245,13 @@
   :hook (dired-mode . (lambda () (all-the-icons-dired-mode t))))
 
 (use-package auctex
-  :ensure t
-  :defer t
-  :hook (LaTeX-mode . (lambda ()
-			(push (list 'output-pdf "Zathura")
-			      TeX-view-program-selection))))
+    :ensure t
+    :defer t
+    :hook (LaTeX-mode . (lambda ()
+                          (push (list 'output-pdf "Zathura")
+                                TeX-view-program-selection))))
+(setq TeX-auto-save t)
+(setq TeX-parse-self t)
 
 (use-package smartparens
   :init
@@ -479,6 +489,7 @@ one, an error is signaled."
   (add-hook 'c++-mode-hook 'lsp)
   (add-hook 'java-mode-hook 'lsp)
   (add-hook 'sh-mode-hook 'lsp)
+  (add-hook 'tex-mode-hook 'lsp)
   '(lsp-enable-whichkey-integration t)
   (lsp))
 
@@ -554,6 +565,14 @@ one, an error is signaled."
   :hook (verilog-mode . (lambda ()
                           (require 'verilog-mode)
                           (lsp))))
+
+(use-package lsp-ltex
+  :ensure t
+  :hook (text-mode . (lambda ()
+                       (require 'lsp-ltex)
+                       (lsp)))  ; or lsp-deferred
+  :init
+  (setq lsp-ltex-version "15.2.0"))  ; make sure you have set this, see below
 
 (global-set-key [escape] 'keyboard-escape-quit)
 
