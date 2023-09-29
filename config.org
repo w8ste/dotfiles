@@ -180,11 +180,19 @@
 
       ;; quality of life keybindings
       (w8ste/leader-keys
-        "f c" '((lambda () (interactive) (find-file "~/.config/emacs/config.org")) :wk "Edit emacs config")
-        "fr" '(counsel-recentf :wk "Find recent files")
-        "pf" '(projectile-find-file :wk "Find file in current project")
-        "=" '(perspective-map :wk "Perspective") 
         "TAB TAB" '(comment-line :wk "Comment lines"))
+
+      (w8ste/leader-keys
+        "f c" '((lambda () (interactive) (find-file "~/.config/emacs/config.org")) :wk "Edit emacs config")
+        "f r" '(counsel-recentf :wk "Find recent files"))
+
+      ;; navigating through you 
+      (w8ste/leader-keys
+        "p" '(:ignore :wk "Navigation")'
+        "p r" '(counsel-recentf :wk "Find recent files")
+        "p f" '(projectile-find-file :wk "Find file in current project")
+        "p =" '(perspective-map :wk "Perspective") 
+        "p s" '(rgrep :wk "Find regex"))
 
       ;; eval keybindings
       (w8ste/leader-keys
