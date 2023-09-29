@@ -1,6 +1,5 @@
 g++ main.cpp -o main
 main
-./main
 git status
 git add config.el config.org
 git status
@@ -17,3 +16,44 @@ git push origin main
 exit
 exa -lh
 ls
+g++ main.cpp -o main
+neofetch
+clear
+g++ -o main main.cpp 
+./main
+g++ -o main main.cpp 
+./main
+g++ -o main main.cpp 
+./main
+g++ -o main main.cpp 
+./main
+g++ main.cpp -o main
+./main
+g++ main.cpp -o main
+./main
+g++ main.cpp -o main
+./main
+g++ main.cpp -o main
+./main
+g++ main.cpp -o main
+./main
+g++ main.cpp -o main
+./main
+g++ main.cpp -o main 
+./main
+g++ main.cpp -o main 
+./main
+g++ main.cpp -o main 
+./main
+g++ main.cpp -o main 
+./main
+g++ main.cpp -o main 
+./main
+g++ main.cpp -o main 
+./main
+g++ main.cpp -o main 
+./main
+g++ main.cpp -o main 
+./main
+ g++ main.cpp -o main
+./main
