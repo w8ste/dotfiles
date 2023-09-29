@@ -103,6 +103,9 @@ bindsym mod1+f exec --no-startup-id firefox &
 # launch emacs
 bindsym mod1+e exec --no-startup-id ~/.config/scripts/emacs-open.sh &
 
+# launch obsidian
+bindsym mod1+o exec --no-startup-id obsidian &
+
 # change focus (vim keybindings)
 bindsym $mod+h focus left
 bindsym $mod+j focus down
