@@ -171,6 +171,7 @@
     "h l" '(view-lossage :wk "Display recent keystrokes and the commands run")
     "h L" '(describe-language-environment :wk "Describe language environment")
     "h m" '(describe-mode :wk "Describe mode")
+    "h n" '(hackernews :wk "Hackernews")
     "h r" '(:ignore t :wk "Reload")
     "h r r" '((lambda () (interactive)
                 (load-file "~/.config/emacs/init.el")
@@ -423,6 +424,8 @@ one, an error is signaled."
 (global-display-line-numbers-mode 1)
 (setq display-line-numbers-type 'relative)
 (global-visual-line-mode t)
+
+(use-package hackernews)
 
 (use-package highlight-indent-guides
   :config
