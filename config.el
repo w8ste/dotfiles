@@ -116,14 +116,16 @@
 
   (w8ste/leader-keys
     "f c" '((lambda () (interactive) (find-file "~/.config/emacs/config.org")) :wk "Edit emacs config")
-    "f r" '(counsel-recentf :wk "Find recent files"))
+    "f r" '(counsel-recentf :wk "Find recent files")
+    "f p" '(flycheck-list-errors :wk "List errors"))
 
   ;; navigating through you 
   (w8ste/leader-keys
     "p" '(:ignore :wk "Navigation")'
     "p r" '(counsel-recentf :wk "Find recent files")
     "p f" '(projectile-find-file :wk "Find file in current project")
-    "p =" '(perspective-map :wk "Perspective") 
+    "p =" '(perspective-map :wk "Perspective")
+    "p e" '(goto-next-locus :wk "Goto next error")
     "p s" '(rgrep :wk "Find regex"))
 
   ;; eval keybindings
@@ -208,6 +210,7 @@
     "m e" '(org-export-dispatch :wk "Org export dispatch")
     "m i" '(org-toggle-item :wk "Org toggle item")
     "m t" '(org-todo :wk "Org todo")
+    "m l" '(hl-todo-occur :wk "Find all todo's in file")
     "m B" '(org-babel-tangle :wk "Org babel tangle")
     "m T" '(org-todo-list :wk "Org todo list"))
 
@@ -402,10 +405,14 @@ one, an error is signaled."
 (setq-default line-spacing 0.12)
 
 (use-package flycheck
- :ensure t
- :defer t
- :diminish
- :init (global-flycheck-mode))
+  :ensure t
+  :defer t
+  :diminish
+  :init
+  (add-hook 'c++-mode-hook
+            (lambda () (setq flycheck-clang-language-standard "c++17"))) 
+  (setq flycheck-clang-language-standard "c++17")
+  (global-flycheck-mode))
 
 (use-package git-timemachine
   :after git-timemachine
@@ -487,6 +494,7 @@ one, an error is signaled."
   :commands (lsp lsp-deferred)
   :init
   (setq lsp-keymap-prefix "C-c l")
+  (setq lsp-modeline-diagnostics-enable nil)
   :hook (lsp-after-apply-edits-hook t)
   :config
   (add-hook 'c++-mode-hook 'lsp)
@@ -520,8 +528,8 @@ one, an error is signaled."
                ("C-j"        . corfu-next)
                ([tab]        . corfu-next)
                ("C-k"      . corfu-previous)
-               ("C-z" . corfu-insert)
-               ("C-ü" . corfu-popupinfo-documentation)
+               ("C-u" . corfu-insert)
+               ("C-i" . corfu-popupinfo-documentation)
                ("RET"        . nil))
 
    :init
@@ -569,6 +577,28 @@ one, an error is signaled."
                           (require 'verilog-mode)
                           (lsp))))
 
+(use-package ccls
+  :ensure t
+  :config
+  (setq ccls-executable "ccls")
+  (setq lsp-prefer-flymake nil)
+  (setq-default flycheck-disabled-checkers '(c/c++-clang c/c++-cppcheck c/c++-gcc))
+  :hook ((c-mode c++-mode objc-mode) .
+         (lambda () (require 'ccls) (lsp))))
+
+ ;;; This will enable emacs to compile a simple cpp single file without any makefile by just pressing [f9] key
+(defun code-compile()
+  (interactive)
+  (unless (file-exists-p "Makefile")
+    (set (make-local-variable 'compile-command)
+         (let ((file (file-name-nondirectory buffer-file-name)))
+           (format "%s -o %s %s"
+                   (if (equal (file-name-extension file) "cpp") "g++" "gcc")
+                   (file-name-sans-extension file)
+                   file)))
+    (compile compile-command)))
+(global-set-key [f9] 'code-compile)
+
 (use-package lsp-ltex
   :ensure t
   :hook (text-mode . (lambda ()
@@ -606,8 +636,9 @@ one, an error is signaled."
                   (setq auto-hscroll-mode nil)))))
 
 (use-package toc-org
-  :commands toc-org-enable
-  :init (add-hook 'org-mode-hook 'toc-org-enable))
+   :commands toc-org-enable
+   :init (add-hook 'org-mode-hook 'toc-org-enable))
+(setq org-agenda-files (list "~/University/uni.org"))
 
 (add-hook 'org-mode-hook 'org-indent-mode)
 (use-package org-bullets)

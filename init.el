@@ -13,6 +13,7 @@
  '(evil-toggle-key "")
  '(highlight-indent-guides-auto-enabled nil)
  '(highlight-indent-guides-method 'character)
+ '(lsp-clangd-version "16.0.2")
  '(package-selected-packages '(lua-mode auctex)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
