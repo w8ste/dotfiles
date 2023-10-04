@@ -112,11 +112,19 @@
 
   ;; quality of life keybindings
   (w8ste/leader-keys
-    "f c" '((lambda () (interactive) (find-file "~/.config/emacs/config.org")) :wk "Edit emacs config")
-    "fr" '(counsel-recentf :wk "Find recent files")
-    "pf" '(projectile-find-file :wk "Find file in current project")
-    "=" '(perspective-map :wk "Perspective") 
     "TAB TAB" '(comment-line :wk "Comment lines"))
+
+  (w8ste/leader-keys
+    "f c" '((lambda () (interactive) (find-file "~/.config/emacs/config.org")) :wk "Edit emacs config")
+    "f r" '(counsel-recentf :wk "Find recent files"))
+
+  ;; navigating through you 
+  (w8ste/leader-keys
+    "p" '(:ignore :wk "Navigation")'
+    "p r" '(counsel-recentf :wk "Find recent files")
+    "p f" '(projectile-find-file :wk "Find file in current project")
+    "p =" '(perspective-map :wk "Perspective") 
+    "p s" '(rgrep :wk "Find regex"))
 
   ;; eval keybindings
   (w8ste/leader-keys
@@ -565,23 +573,6 @@ one, an error is signaled."
         doom-modeline-bar-width 5    ;; sets right bar width
         doom-modeline-persp-name t   ;; adds perspective name to modeline
         doom-modeline-persp-icon t)) ;; adds folder icon next to persp name
-
-(use-package neotree
-  :config
-  (setq neo-smart-open t
-        neo-show-hidden-files t
-        neo-window-width 37
-        neo-window-fixed-size nil
-        inhibit-compacting-font-caches t
-        projectile-switch-project-action 'neotree-projectile-action) 
-  ;; truncate long file names in neotree
-  (add-hook 'neo-after-create-hook
-            #'(lambda (_)
-                (with-current-buffer (get-buffer neo-buffer-name)
-                  (setq truncate-lines t)
-                  (setq word-wrap nil)
-                  (make-local-variable 'auto-hscroll-mode)
-                  (setq auto-hscroll-mode nil)))))
 
 (use-package toc-org
   :commands toc-org-enable
