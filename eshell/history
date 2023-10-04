@@ -1,6 +1,5 @@
 g++ main.cpp -o main
 main
-./main
 git status
 git add config.el config.org
 git status
@@ -14,6 +13,68 @@ git commit
 cd ..
 git commit -m "Update emacs"
 git push origin main
-exit
 exa -lh
 ls
+g++ main.cpp -o main
+neofetch
+clear
+g++ -o main main.cpp 
+g++ -o main main.cpp 
+g++ -o main main.cpp 
+g++ -o main main.cpp 
+g++ main.cpp -o main
+g++ main.cpp -o main
+g++ main.cpp -o main
+g++ main.cpp -o main
+g++ main.cpp -o main
+g++ main.cpp -o main
+g++ main.cpp -o main 
+g++ main.cpp -o main 
+g++ main.cpp -o main 
+g++ main.cpp -o main 
+g++ main.cpp -o main 
+g++ main.cpp -o main 
+g++ main.cpp -o main 
+g++ main.cpp -o main 
+g++ main.cpp -o main
+ls 
+g++ main.cpp -o main
+g++ main.cpp -o main
+g++ main.cpp -o main
+g++ main.cpp -o main
+g++ main.cpp -o main
+g++ main.cpp -o main
+g++ main.cpp -o main
+g++ main.cpp -o main
+g++ main.cpp -o main
+/etc/redhat-release
+/etc/arch-release
+g++ main.cpp -o main
+g++ main.cpp -o main
+exit
+g++ --version
+g++ -std=c++17 main.cpp
+./main
+cat /etc/arch-release 
+g++ main.cpp -o main 
+./main
+g++ main.cpp -o main 
+./main
+g++ main.cpp -o main 
+./main
+g++ main.cpp -o main 
+./main
+g++ main.cpp -o main 
+./main
+g++ main.cpp -o main 
+./main
+g++ main.cpp -o main 
+./main
+g++ main.cpp -o main 
+./main
+g++ main.cpp -o main 
+./main
+g++ main.cpp -o main 
+./main
+g++ main.cpp -o main 
+./main
