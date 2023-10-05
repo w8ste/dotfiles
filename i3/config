@@ -42,7 +42,7 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 #exec --no-startup-id nm-applet
 
 # Scipt which enables natural-scrolling and tap-to-click
-exec --no-startup-id ~/.config/pad.sh
+exec --no-startup-id ~/.config/scripts/pad.sh
 
 # autostart picom
 # exec --no-startup-id picom -b
