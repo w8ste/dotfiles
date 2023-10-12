@@ -51,30 +51,89 @@ g++ main.cpp -o main
 /etc/arch-release
 g++ main.cpp -o main
 g++ main.cpp -o main
-exit
 g++ --version
 g++ -std=c++17 main.cpp
-./main
 cat /etc/arch-release 
 g++ main.cpp -o main 
-./main
+g++ main.cpp -o main 
+g++ main.cpp -o main 
+g++ main.cpp -o main 
+g++ main.cpp -o main 
+g++ main.cpp -o main 
+g++ main.cpp -o main 
+g++ main.cpp -o main 
+g++ main.cpp -o main 
+g++ main.cpp -o main 
+g++ main.cpp -o main 
+g++ main.cpp -o main 
+g++ main.cpp -o main 
 g++ main.cpp -o main 
 ./main
-g++ main.cpp -o main 
-./main
-g++ main.cpp -o main 
-./main
-g++ main.cpp -o main 
-./main
-g++ main.cpp -o main 
-./main
-g++ main.cpp -o main 
-./main
-g++ main.cpp -o main 
-./main
-g++ main.cpp -o main 
-./main
-g++ main.cpp -o main 
-./main
-g++ main.cpp -o main 
-./main
+/bin/synth.sh registerFile.sv 
+ls
+/bin/synth.sh registerFile
+zathura registerFile.pdf
+/bin/synth.sh regFil
+ls
+mkdir blocks
+mv registerFile.* blocks/ 
+ls
+rm -rf test
+ls
+git init 
+ls
+git status
+ls 
+ls
+yosys opt -fine adder 
+yosys
+exit
+ls
+rm adder.pdf
+rm adder.dot
+mv registerFile.* blocks/ 
+yosys -h
+yosys
+ls
+/bin/synth.sh adder
+/bin/synth.sh registerFile
+yosys
+ls
+/bin/synth.sh adder
+cd ..
+mkdir .images
+/bin/synth.sh multiplexer
+/bin/synth.sh registerFile
+ls
+mv registerFile.pdf ../.images/
+ls
+cd blocks
+ls
+rm *.pdf
+ls
+rm *.*~
+ls
+rm iberty 
+ls
+rm show 
+ls
+/bin/synth.sh resetenff
+/bin/synth.sh resetff
+ls
+rm *.pdf
+ls
+rm iberty 
+ls
+/bin/synth.sh resetff
+ls
+rm *.pdf
+rm *.dot
+ls
+cd ..
+cd block
+ls
+cd blocks/ 
+ls
+/bin/synth.sh alu.sv 
+/bin/synth.sh alu
+exit
