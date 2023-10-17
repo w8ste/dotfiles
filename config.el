@@ -250,13 +250,12 @@
   :hook (dired-mode . (lambda () (all-the-icons-dired-mode t))))
 
 (use-package auctex
-    :ensure t
-    :defer t
-    :hook (LaTeX-mode . (lambda ()
-                          (push (list 'output-pdf "Zathura")
-                                TeX-view-program-selection))))
-(setq TeX-auto-save t)
-(setq TeX-parse-self t)
+  :defer t
+  :hook
+  (LaTeX-mode . lsp-deferred))
+;; :hook (LaTeX-mode . (lambda ()
+;;                       (push (list 'output-pdf "Zathura")
+;;                             TeX-view-program-selection))))
 
 (use-package smartparens
   :init
@@ -502,6 +501,7 @@ one, an error is signaled."
   (add-hook 'java-mode-hook 'lsp)
   (add-hook 'sh-mode-hook 'lsp)
   (add-hook 'tex-mode-hook 'lsp)
+  (add-hook 'latex-mode-hook 'lsp)
   '(lsp-enable-whichkey-integration t)
   (lsp))
 
@@ -648,6 +648,9 @@ one, an error is signaled."
 
 (require 'org-tempo)
 
+(use-package pdf-tools
+  :defer t)
+
 (use-package perspective
   :custom
   ;; NOTE! I have also set 'SCP =' to open the perspective menu.
@@ -777,3 +780,23 @@ one, an error is signaled."
 	which-key-max-description-length 25
 	which-key-allow-imprecise-window-fit nil 
 	which-key-separator " → " ))
+
+(use-package yasnippet
+:ensure t
+:hook ((LaTeX-mode . yas-minor-mode)
+       (post-self-insert . my/yas-try-expanding-auto-snippets))
+:config
+(use-package warnings
+  :config
+  (cl-pushnew '(yasnippet backquote-change)
+              warning-suppress-types
+              :test 'equal))
+
+(setq yas-triggers-in-field t)
+
+;; Function that tries to autoexpand YaSnippets
+;; The double quoting is NOT a typo!
+(defun my/yas-try-expanding-auto-snippets ()
+  (when (and (boundp 'yas-minor-mode) yas-minor-mode)
+    (let ((yas-buffer-local-condition ''(require-snippet-condition . auto)))
+      (yas-expand)))))

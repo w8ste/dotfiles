@@ -13,8 +13,9 @@
  '(evil-toggle-key "")
  '(highlight-indent-guides-auto-enabled nil)
  '(highlight-indent-guides-method 'character)
+ '(ignored-local-variable-values '((TeX-master . t)))
  '(lsp-clangd-version "16.0.2")
- '(package-selected-packages '(lua-mode auctex)))
+ '(package-selected-packages '(auctex lua-mode)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

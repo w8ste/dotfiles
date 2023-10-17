@@ -14,7 +14,6 @@ cd ..
 git commit -m "Update emacs"
 git push origin main
 exa -lh
-ls
 g++ main.cpp -o main
 neofetch
 clear
@@ -70,70 +69,134 @@ g++ main.cpp -o main
 g++ main.cpp -o main 
 ./main
 /bin/synth.sh registerFile.sv 
-ls
 /bin/synth.sh registerFile
 zathura registerFile.pdf
 /bin/synth.sh regFil
-ls
 mkdir blocks
 mv registerFile.* blocks/ 
-ls
 rm -rf test
-ls
 git init 
-ls
 git status
 ls 
-ls
 yosys opt -fine adder 
 yosys
-exit
-ls
 rm adder.pdf
 rm adder.dot
 mv registerFile.* blocks/ 
 yosys -h
 yosys
-ls
 /bin/synth.sh adder
 /bin/synth.sh registerFile
 yosys
-ls
 /bin/synth.sh adder
 cd ..
 mkdir .images
 /bin/synth.sh multiplexer
 /bin/synth.sh registerFile
-ls
 mv registerFile.pdf ../.images/
-ls
 cd blocks
-ls
 rm *.pdf
-ls
 rm *.*~
-ls
 rm iberty 
-ls
 rm show 
-ls
 /bin/synth.sh resetenff
 /bin/synth.sh resetff
-ls
 rm *.pdf
-ls
 rm iberty 
-ls
 /bin/synth.sh resetff
-ls
 rm *.pdf
 rm *.dot
-ls
 cd ..
 cd block
-ls
 cd blocks/ 
-ls
 /bin/synth.sh alu.sv 
 /bin/synth.sh alu
+/bin/synth.sh decoder
+cd ..
+/bin/synth.sh datapath
+cd main/ 
+/bin/synth.sh datapath
+mv ../block/alu .
+cd ..
+mv blocks/alu.sv main
+cd main/ 
+/bin/synth.sh datapath
+cd ..
+mv blocks/multiplexer.sv main
+cd main/ 
+/bin/synth.sh datapath
+mv -r main/ block/
+mv -r main/* block/
+mv  main/* block/
+mv main block
+cd ..
+mv main/ block
+cd block
+cd ,,
+No such directory: ,,
+mv main blocks  
+cd ..
+mv main blocks  
+/usr/bin/mv: invalid option -- 'r'
+mv block blocks  
+cd blocks/
+cd block/ 
+mv --help
+mv . ..
+mv *.sv ..
+cd ..
+rm -rf block
+/bin/synth.sh datapath
+mv datapath.pdf ../.images
+cd ..
+mv blocks/datapath.sv blocks/decoder.sv main
+mv blocks/datapath.sv blocks/decoder.sv /main/
+mv blocks/datapath.sv blocks/decoder.sv ./main/
+mkdir main
+mv blocks/datapath.sv blocks/decoder.sv /main/
+mv blocks/datapath.sv blocks/decoder.sv main/
+/bin/synth.sh condcheck
+/bin/synth.sh condlogic
+mv alu.sv ..
+/bin/synth.sh condlogic
+mv *.sv ../blocks 
+cd ../blocks
+/bin/synth.sh condlogic
+/bin/synth.sh condcheck
+cd ..
+mv alu block
+cd alu.sv block
+mv alu.sv blocks
+cd blocks
+/bin/synth.sh alu
+mv *.pdf ../.images/
+mv alu.sv condcheck.sv condlogic.sv datapath.sv decoder.sv controller.sv ../main/
+mv *.sv ../blocks
+cd ../blocks/ 
+.rw-r--r--   595 hannes 16 Oct 09:44  alu.sv
+/bin/synth.sh datamem
+/bin/synth.sh alu
+/bin/synth.sh instrmem
+rm -rf .
 exit
+rm -rf *
+ls 
+rm exercise01.tex 
+ls
+mkdir 01
+mv /
+cd pictures/ 
+ls
+cd ,,
+cd ..
+rmdir pictures/ 
+mv myTemplate.tex exercise1.tex
+mv exercise1.tex 01
+ls
+rm -rf *
+ls
+mkdir 01 
+mv pictures/ 01
+mv myTemplate.tex 01/exercise1.tex
+cd 01
+ls
