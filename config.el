@@ -415,6 +415,7 @@ one, an error is signaled."
   (global-flycheck-mode))
 
 (use-package git-timemachine
+  :diminish
   :after git-timemachine
   :hook (evil-normalize-keymaps . git-timemachine-hook)
   :config
@@ -422,7 +423,8 @@ one, an error is signaled."
   (evil-define-key 'normal git-timemachine-mode-map (kbd "C-k") 'git-timemachine-show-next-revision)
   )
 
-(use-package magit)
+(use-package magit
+  :diminish)
 
 (menu-bar-mode -1)
 (tool-bar-mode -1)
@@ -784,13 +786,7 @@ one, an error is signaled."
 (use-package yasnippet
 :ensure t
 :hook ((LaTeX-mode . yas-minor-mode)
-       (post-self-insert . my/yas-try-expanding-auto-snippets))
-:config
-(use-package warnings
-  :config
-  (cl-pushnew '(yasnippet backquote-change)
-              warning-suppress-types
-              :test 'equal))
+       (post-self-insert . my/yas-try-expanding-auto-snippets)))
 
 (setq yas-triggers-in-field t)
 
@@ -799,4 +795,4 @@ one, an error is signaled."
 (defun my/yas-try-expanding-auto-snippets ()
   (when (and (boundp 'yas-minor-mode) yas-minor-mode)
     (let ((yas-buffer-local-condition ''(require-snippet-condition . auto)))
-      (yas-expand)))))
+      (yas-expand))))

@@ -182,21 +182,19 @@ exit
 rm -rf *
 ls 
 rm exercise01.tex 
-ls
 mkdir 01
 mv /
 cd pictures/ 
-ls
 cd ,,
 cd ..
 rmdir pictures/ 
 mv myTemplate.tex exercise1.tex
 mv exercise1.tex 01
-ls
 rm -rf *
-ls
 mkdir 01 
 mv pictures/ 01
 mv myTemplate.tex 01/exercise1.tex
 cd 01
 ls
+cd ..
+lh
