@@ -1,4 +1,3 @@
-window.opacity: 0.9
 dynamic_title: false
 scrolling:
   # Maximum number of lines in the scrollback buffer.
