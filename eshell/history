@@ -1,0 +1,204 @@
+g++ main.cpp -o main
+main
+git status
+git add config.el config.org
+git status
+git status
+git commit -m "Added doom-modeline"
+git push origin main
+cd ..
+git add em
+git add emacs
+git commit
+cd ..
+git commit -m "Update emacs"
+git push origin main
+exa -lh
+g++ main.cpp -o main
+neofetch
+clear
+g++ -o main main.cpp 
+g++ -o main main.cpp 
+g++ -o main main.cpp 
+g++ -o main main.cpp 
+g++ main.cpp -o main
+g++ main.cpp -o main
+g++ main.cpp -o main
+g++ main.cpp -o main
+g++ main.cpp -o main
+g++ main.cpp -o main
+g++ main.cpp -o main 
+g++ main.cpp -o main 
+g++ main.cpp -o main 
+g++ main.cpp -o main 
+g++ main.cpp -o main 
+g++ main.cpp -o main 
+g++ main.cpp -o main 
+g++ main.cpp -o main 
+g++ main.cpp -o main
+ls 
+g++ main.cpp -o main
+g++ main.cpp -o main
+g++ main.cpp -o main
+g++ main.cpp -o main
+g++ main.cpp -o main
+g++ main.cpp -o main
+g++ main.cpp -o main
+g++ main.cpp -o main
+g++ main.cpp -o main
+/etc/redhat-release
+/etc/arch-release
+g++ main.cpp -o main
+g++ main.cpp -o main
+g++ --version
+g++ -std=c++17 main.cpp
+cat /etc/arch-release 
+g++ main.cpp -o main 
+g++ main.cpp -o main 
+g++ main.cpp -o main 
+g++ main.cpp -o main 
+g++ main.cpp -o main 
+g++ main.cpp -o main 
+g++ main.cpp -o main 
+g++ main.cpp -o main 
+g++ main.cpp -o main 
+g++ main.cpp -o main 
+g++ main.cpp -o main 
+g++ main.cpp -o main 
+g++ main.cpp -o main 
+g++ main.cpp -o main 
+./main
+/bin/synth.sh registerFile.sv 
+/bin/synth.sh registerFile
+zathura registerFile.pdf
+/bin/synth.sh regFil
+mkdir blocks
+mv registerFile.* blocks/ 
+rm -rf test
+git init 
+git status
+ls 
+yosys opt -fine adder 
+yosys
+rm adder.pdf
+rm adder.dot
+mv registerFile.* blocks/ 
+yosys -h
+yosys
+/bin/synth.sh adder
+/bin/synth.sh registerFile
+yosys
+/bin/synth.sh adder
+cd ..
+mkdir .images
+/bin/synth.sh multiplexer
+/bin/synth.sh registerFile
+mv registerFile.pdf ../.images/
+cd blocks
+rm *.pdf
+rm *.*~
+rm iberty 
+rm show 
+/bin/synth.sh resetenff
+/bin/synth.sh resetff
+rm *.pdf
+rm iberty 
+/bin/synth.sh resetff
+rm *.pdf
+rm *.dot
+cd ..
+cd block
+cd blocks/ 
+/bin/synth.sh alu.sv 
+/bin/synth.sh alu
+/bin/synth.sh decoder
+cd ..
+/bin/synth.sh datapath
+cd main/ 
+/bin/synth.sh datapath
+mv ../block/alu .
+cd ..
+mv blocks/alu.sv main
+cd main/ 
+/bin/synth.sh datapath
+cd ..
+mv blocks/multiplexer.sv main
+cd main/ 
+/bin/synth.sh datapath
+mv -r main/ block/
+mv -r main/* block/
+mv  main/* block/
+mv main block
+cd ..
+mv main/ block
+cd block
+cd ,,
+No such directory: ,,
+mv main blocks  
+cd ..
+mv main blocks  
+/usr/bin/mv: invalid option -- 'r'
+mv block blocks  
+cd blocks/
+cd block/ 
+mv --help
+mv . ..
+mv *.sv ..
+cd ..
+rm -rf block
+/bin/synth.sh datapath
+mv datapath.pdf ../.images
+cd ..
+mv blocks/datapath.sv blocks/decoder.sv main
+mv blocks/datapath.sv blocks/decoder.sv /main/
+mv blocks/datapath.sv blocks/decoder.sv ./main/
+mkdir main
+mv blocks/datapath.sv blocks/decoder.sv /main/
+mv blocks/datapath.sv blocks/decoder.sv main/
+/bin/synth.sh condcheck
+/bin/synth.sh condlogic
+mv alu.sv ..
+/bin/synth.sh condlogic
+mv *.sv ../blocks 
+cd ../blocks
+/bin/synth.sh condlogic
+/bin/synth.sh condcheck
+cd ..
+mv alu block
+cd alu.sv block
+mv alu.sv blocks
+cd blocks
+/bin/synth.sh alu
+mv *.pdf ../.images/
+mv alu.sv condcheck.sv condlogic.sv datapath.sv decoder.sv controller.sv ../main/
+mv *.sv ../blocks
+cd ../blocks/ 
+.rw-r--r--   595 hannes 16 Oct 09:44  alu.sv
+/bin/synth.sh datamem
+/bin/synth.sh alu
+/bin/synth.sh instrmem
+rm -rf .
+exit
+rm -rf *
+ls 
+rm exercise01.tex 
+mkdir 01
+mv /
+cd pictures/ 
+cd ,,
+cd ..
+rmdir pictures/ 
+mv myTemplate.tex exercise1.tex
+mv exercise1.tex 01
+rm -rf *
+mkdir 01 
+mv pictures/ 01
+mv myTemplate.tex 01/exercise1.tex
+cd 01
+ls
+cd ..
+lh
+cd ..
+cd ,,
+cd ..
+mv latexmkrc DT/Tutor/01/
