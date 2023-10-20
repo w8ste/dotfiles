@@ -39,24 +39,24 @@
   ;; Enable :elpaca use-package keyword.
   (elpaca-use-package-mode)
   ;; Assume :elpaca t unless otherwise specified.
-    (setq elpaca-use-package-by-default t))
+  (setq elpaca-use-package-by-default t))
 
-  ;; Block until current queue processed.
-  (elpaca-wait)
+;; Block until current queue processed.
+(elpaca-wait)
 
-  ;;When installing a package which modifies a form used at the top-level
-  ;;(e.g. a package which adds a use-package key word),
-  ;;use `elpaca-wait' to block until that package has been installed/configured.
-  ;;For example:
-  ;;(USE-package general :demand t)
-  ;;(elpaca-wait)
-  ;;Turns off elpaca-use-package-mode current declartion
-  ;;Note this will cause the declaration to be interpreted immediately (not deferred).
-  ;;Useful for configuring built-in emacs features.
-  (use-package emacs :elpaca nil :config (setq ring-bell-function #'ignore))
+;;When installing a package which modifies a form used at the top-level
+;;(e.g. a package which adds a use-package key word),
+;;use `elpaca-wait' to block until that package has been installed/configured.
+;;For example:
+;;(USE-package general :demand t)
+;;(elpaca-wait)
+;;Turns off elpaca-use-package-mode current declartion
+;;Note this will cause the declaration to be interpreted immediately (not deferred).
+;;Useful for configuring built-in emacs features.
+(use-package emacs :elpaca nil :config (setq ring-bell-function #'ignore))
 
-  ;; Don't install anything. Defer execution of BODY
-  ;;(elpaca nil (message "deferred"))
+;; Don't install anything. Defer execution of BODY
+;;(elpaca nil (message "deferred"))
 
 (use-package evil
   :bind (:map evil-insert-state-map ("C-k" . nil)) 
@@ -74,13 +74,13 @@
 
 ;; settings keybindings for evil
 (with-eval-after-load 'evil-maps
-(define-key evil-motion-state-map (kbd "SPC") nil)
-(define-key evil-motion-state-map (kbd "RET") nil)
-(define-key evil-visual-state-map (kbd "C-c") 'evil-normal-state)
-(define-key evil-insert-state-map (kbd "C-c") 'evil-normal-state)
-(define-key evil-motion-state-map (kbd "C-e") nil)
-(define-key evil-visual-state-map (kbd "C-c") 'evil-exit-visual-state)
-(define-key evil-motion-state-map (kbd "TAB") nil))
+  (define-key evil-motion-state-map (kbd "SPC") nil)
+  (define-key evil-motion-state-map (kbd "RET") nil)
+  (define-key evil-visual-state-map (kbd "C-c") 'evil-normal-state)
+  (define-key evil-insert-state-map (kbd "C-c") 'evil-normal-state)
+  (define-key evil-motion-state-map (kbd "C-e") nil)
+  (define-key evil-visual-state-map (kbd "C-c") 'evil-exit-visual-state)
+  (define-key evil-motion-state-map (kbd "TAB") nil))
 
 (keymap-global-set "C-c k" 'kill-line)
 (use-package general
@@ -250,12 +250,14 @@
   :hook (dired-mode . (lambda () (all-the-icons-dired-mode t))))
 
 (use-package auctex
-  :defer t
+  :elpaca (auctex :pre-build (("./autogen.sh") ("./configure" "--without-texmf-dir" "--with-lispdir=.") ("make")))
+  :mode
+  ("\\.tex\\'" . TeX-latex-mode)
   :hook
-  (LaTeX-mode . lsp-deferred))
-;; :hook (LaTeX-mode . (lambda ()
-;;                       (push (list 'output-pdf "Zathura")
-;;                             TeX-view-program-selection))))
+  ((LaTeX-mode . lsp-deferred)
+   (LaTeX-mode . (lambda ()
+                   (push (list 'output-pdf "Evince")
+                         TeX-view-program-selection)))))
 
 (use-package smartparens
   :init
@@ -268,11 +270,11 @@
   "Swap the current buffer and the buffer above the split.
 If there is no split, ie now window above the current one, an
 error is signaled."
-;;  "Switches between the current buffer, and the buffer above the
-;;  split, if possible."
+  ;;  "Switches between the current buffer, and the buffer above the
+  ;;  split, if possible."
   (interactive)
   (let* ((other-win (windmove-find-other-window 'up))
-	 (buf-this-buf (window-buffer (selected-window))))
+         (buf-this-buf (window-buffer (selected-window))))
     (if (null other-win)
         (error "No window above this one")
       ;; swap top with this one
@@ -283,12 +285,12 @@ error is signaled."
 
 ;;;###autoload
 (defun buf-move-down ()
-"Swap the current buffer and the buffer under the split.
+  "Swap the current buffer and the buffer under the split.
 If there is no split, ie now window under the current one, an
 error is signaled."
   (interactive)
   (let* ((other-win (windmove-find-other-window 'down))
-	 (buf-this-buf (window-buffer (selected-window))))
+         (buf-this-buf (window-buffer (selected-window))))
     (if (or (null other-win) 
             (string-match "^ \\*Minibuf" (buffer-name (window-buffer other-win))))
         (error "No window under this one")
@@ -300,12 +302,12 @@ error is signaled."
 
 ;;;###autoload
 (defun buf-move-left ()
-"Swap the current buffer and the buffer on the left of the split.
+  "Swap the current buffer and the buffer on the left of the split.
 If there is no split, ie now window on the left of the current
 one, an error is signaled."
   (interactive)
   (let* ((other-win (windmove-find-other-window 'left))
-	 (buf-this-buf (window-buffer (selected-window))))
+         (buf-this-buf (window-buffer (selected-window))))
     (if (null other-win)
         (error "No left split")
       ;; swap top with this one
@@ -316,12 +318,12 @@ one, an error is signaled."
 
 ;;;###autoload
 (defun buf-move-right ()
-"Swap the current buffer and the buffer on the right of the split.
+  "Swap the current buffer and the buffer on the right of the split.
 If there is no split, ie now window on the right of the current
 one, an error is signaled."
   (interactive)
   (let* ((other-win (windmove-find-other-window 'right))
-	 (buf-this-buf (window-buffer (selected-window))))
+         (buf-this-buf (window-buffer (selected-window))))
     (if (null other-win)
         (error "No right split")
       ;; swap top with this one
@@ -365,11 +367,11 @@ one, an error is signaled."
   :after dired
   :hook (evil-normalize-keymaps . peep-dired-hook)
   :config
-    (evil-define-key 'normal dired-mode-map (kbd "h") 'dired-up-directory)
-    (evil-define-key 'normal dired-mode-map (kbd "l") 'dired-open-file) ; use dired-find-file instead if not using dired-open package
-    (evil-define-key 'normal peep-dired-mode-map (kbd "j") 'peep-dired-next-file)
-    (evil-define-key 'normal peep-dired-mode-map (kbd "k") 'peep-dired-prev-file)
-)
+  (evil-define-key 'normal dired-mode-map (kbd "h") 'dired-up-directory)
+  (evil-define-key 'normal dired-mode-map (kbd "l") 'dired-open-file) ; use dired-find-file instead if not using dired-open package
+  (evil-define-key 'normal peep-dired-mode-map (kbd "j") 'peep-dired-next-file)
+  (evil-define-key 'normal peep-dired-mode-map (kbd "k") 'peep-dired-prev-file)
+  )
 
 (use-package elcord
   :init
@@ -377,24 +379,24 @@ one, an error is signaled."
 
 (set-frame-font "JetBrains Mono Medium 19")
 (set-face-attribute 'default nil
-  :font "JetBrains Mono Medium"
-  :height 110
-  :weight 'medium)
+                    :font "JetBrains Mono Medium"
+                    :height 110
+                    :weight 'medium)
 (set-face-attribute 'variable-pitch nil
-  :font "JetBrains Mono Medium"
-  :height 120
-  :weight 'medium)
+                    :font "JetBrains Mono Medium"
+                    :height 120
+                    :weight 'medium)
 (set-face-attribute 'fixed-pitch nil
-  :font "JetBrains Mono Medium"
-  :height 110
-  :weight 'medium)
+                    :font "JetBrains Mono Medium"
+                    :height 110
+                    :weight 'medium)
 ;; Makes commented text and keywords italics.
 ;; This is working in emacsclient but not emacs.
 ;; Your font must have an italic face available.
 (set-face-attribute 'font-lock-comment-face nil
-  :slant 'italic)
+                    :slant 'italic)
 (set-face-attribute 'font-lock-keyword-face nil
-  :slant 'italic)
+                    :slant 'italic)
 
 ;; This sets the default font on all graphical frames created after restarting Emacs.
 ;; Does the same thing as 'set-face-attribute default' above, but emacsclient fonts
@@ -503,7 +505,6 @@ one, an error is signaled."
   (add-hook 'java-mode-hook 'lsp)
   (add-hook 'sh-mode-hook 'lsp)
   (add-hook 'tex-mode-hook 'lsp)
-  (add-hook 'latex-mode-hook 'lsp)
   '(lsp-enable-whichkey-integration t)
   (lsp))
 
@@ -514,50 +515,50 @@ one, an error is signaled."
   (setq lsp-ui-doc-position 'bottom))
 
 (use-package corfu
-   ;; Optional customizations
-   :custom
-   (corfu-cycle t)                 ; Allows cycling through candidates
-   (corfu-auto t)                  ; Enable auto completion
-   (corfu-auto-prefix 2)
-   (corfu-auto-delay 0.0)
-   (corfu-popupinfo-delay 0.0)
-   (corfu-preview-current 'insert) ; Do not preview current candidate
-   (corfu-preselect 'prompt)
-   (corfu-on-exact-match nil)      ; Don't auto expand tempel snippets
+  ;; Optional customizations
+  :custom
+  (corfu-cycle t)                 ; Allows cycling through candidates
+  (corfu-auto t)                  ; Enable auto completion
+  (corfu-auto-prefix 2)
+  (corfu-auto-delay 0.0)
+  (corfu-popupinfo-delay 0.0)
+  (corfu-preview-current 'insert) ; Do not preview current candidate
+  (corfu-preselect 'prompt)
+  (corfu-on-exact-match nil)      ; Don't auto expand tempel snippets
 
-   ;; Optionally use TAB for cycling, default is `corfu-complete'.
-   :bind (:map corfu-map
-               ("M-SPC"      . corfu-insert-separator)
-               ("C-j"        . corfu-next)
-               ([tab]        . corfu-next)
-               ("C-k"      . corfu-previous)
-               ("C-u" . corfu-insert)
-               ("C-i" . corfu-popupinfo-documentation)
-               ("RET"        . nil))
+  ;; Optionally use TAB for cycling, default is `corfu-complete'.
+  :bind (:map corfu-map
+              ("M-SPC"      . corfu-insert-separator)
+              ("C-j"        . corfu-next)
+              ([tab]        . corfu-next)
+              ("C-k"      . corfu-previous)
+              ("C-u" . corfu-insert)
+              ("C-i" . corfu-popupinfo-documentation)
+              ("RET"        . nil))
 
-   :init
-   (global-corfu-mode)
-   (corfu-history-mode)
-    (setq corfu-popupinfo-delay 0.2)
-   (corfu-popupinfo-mode) ; Popup completion info
-   :config
-   (add-hook 'eshell-mode-hook
-             (lambda () (setq-local corfu-quit-at-boundary t
-                               corfu-quit-no-match t
-                               corfu-auto nil)
-               (corfu-mode))))
+  :init
+  (global-corfu-mode)
+  (corfu-history-mode)
+  (setq corfu-popupinfo-delay 0.2)
+  (corfu-popupinfo-mode) ; Popup completion info
+  :config
+  (add-hook 'eshell-mode-hook
+            (lambda () (setq-local corfu-quit-at-boundary t
+                                   corfu-quit-no-match t
+                                   corfu-auto nil)
+              (corfu-mode))))
 
 (use-package kind-icon
- :after corfu
- :custom
- (kind-icon-use-icons t)
- (kind-icon-default-face 'corfu-default) ; Have background color be the same as `corfu' face background
- (kind-icon-blend-background nil)  ; Use midpoint color between foreground and background colors ("blended")?
- (kind-icon-blend-frac 0.08)
- ;;(svg-lib-icons-dir (no-littering-expand-var-file-name "svg-lib/cache/")) ; Change cache dir
- :config
- (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter) ; Enable `kind-icon'
- (add-hook 'kb/themes-hooks #'(lambda () (interactive) (kind-icon-reset-cache))))
+  :after corfu
+  :custom
+  (kind-icon-use-icons t)
+  (kind-icon-default-face 'corfu-default) ; Have background color be the same as `corfu' face background
+  (kind-icon-blend-background nil)  ; Use midpoint color between foreground and background colors ("blended")?
+  (kind-icon-blend-frac 0.08)
+  ;;(svg-lib-icons-dir (no-littering-expand-var-file-name "svg-lib/cache/")) ; Change cache dir
+  :config
+  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter) ; Enable `kind-icon'
+  (add-hook 'kb/themes-hooks #'(lambda () (interactive) (kind-icon-reset-cache))))
 
 (use-package lsp-java
   :hook (java-mode . lsp-deferred))
@@ -603,12 +604,13 @@ one, an error is signaled."
 (global-set-key [f9] 'code-compile)
 
 (use-package lsp-ltex
+  :diminish
   :ensure t
-  :hook (text-mode . (lambda ()
+  :hook (tex-mode . (lambda ()
                        (require 'lsp-ltex)
                        (lsp)))  ; or lsp-deferred
   :init
-  (setq lsp-ltex-version "15.2.0"))  ; make sure you have set this, see below
+  (setq lsp-ltex-version "16.0.0"))  ; make sure you have set this, see below
 
 (global-set-key [escape] 'keyboard-escape-quit)
 
@@ -698,7 +700,7 @@ one, an error is signaled."
 ;; eshell-syntax-highlighting -- adds fish/zsh-like syntax highlighting.
 ;; eshell-rc-script -- your profile for eshell; like a bashrc for eshell.
 ;; eshell-aliases-file -- sets an aliases file for the eshell.
-  
+
 (setq eshell-rc-script (concat user-emacs-directory "eshell/profile")
       eshell-aliases-file (concat user-emacs-directory "eshell/aliases")
       eshell-history-size 5000
@@ -709,9 +711,9 @@ one, an error is signaled."
       eshell-visual-commands'("bash" "fish" "htop" "ssh" "top" "zsh"))
 
 (use-package vterm
-:config
-(setq shell-file-name "/bin/fish"
-      vterm-max-scrollback 5000))
+  :config
+  (setq shell-file-name "/bin/fish"
+        vterm-max-scrollback 5000))
 
 (use-package vterm-toggle
   :after vterm
@@ -720,17 +722,17 @@ one, an error is signaled."
   (setq vterm-toggle-scope 'project)
   (add-to-list 'display-buffer-alist
                '((lambda (buffer-or-name _)
-                     (let ((buffer (get-buffer buffer-or-name)))
-                       (with-current-buffer buffer
-                         (or (equal major-mode 'vterm-mode)
-                             (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
-                  (display-buffer-reuse-window display-buffer-at-bottom)
-                  ;;(display-buffer-reuse-window display-buffer-in-direction)
-                  ;;display-buffer-in-direction/direction/dedicated is added in emacs27
-                  ;;(direction . bottom)
-                  ;;(dedicated . t) ;dedicated is supported in emacs27
-                  (reusable-frames . visible)
-                  (window-height . 0.3))))
+                   (let ((buffer (get-buffer buffer-or-name)))
+                     (with-current-buffer buffer
+                       (or (equal major-mode 'vterm-mode)
+                           (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
+                 (display-buffer-reuse-window display-buffer-at-bottom)
+                 ;;(display-buffer-reuse-window display-buffer-in-direction)
+                 ;;display-buffer-in-direction/direction/dedicated is added in emacs27
+                 ;;(direction . bottom)
+                 ;;(dedicated . t) ;dedicated is supported in emacs27
+                 (reusable-frames . visible)
+                 (window-height . 0.3))))
 
 (use-package sudo-edit
   :config
@@ -764,29 +766,29 @@ one, an error is signaled."
   :init
   (global-tree-sitter-mode)
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
-  (use-package tree-sitter-langs)
+(use-package tree-sitter-langs)
 
 (use-package which-key
-:init
+  :init
   (which-key-mode 1)
-:config
-(setq which-key-side-window-location 'bottom
-	which-key-sort-order #'which-key-key-order-alpha
-	which-key-sort-uppercase-first nil
-	which-key-add-column-padding 1
-	which-key-max-display-columns nil
-	which-key-min-display-lines 6
-	which-key-side-window-slot -10
-	which-key-side-window-max-height 0.25
-	which-key-idle-delay 0.8
-	which-key-max-description-length 25
-	which-key-allow-imprecise-window-fit nil 
-	which-key-separator " → " ))
+  :config
+  (setq which-key-side-window-location 'bottom
+        which-key-sort-order #'which-key-key-order-alpha
+        which-key-sort-uppercase-first nil
+        which-key-add-column-padding 1
+        which-key-max-display-columns nil
+        which-key-min-display-lines 6
+        which-key-side-window-slot -10
+        which-key-side-window-max-height 0.25
+        which-key-idle-delay 0.8
+        which-key-max-description-length 25
+        which-key-allow-imprecise-window-fit nil 
+        which-key-separator " → " ))
 
 (use-package yasnippet
-:ensure t
-:hook ((LaTeX-mode . yas-minor-mode)
-       (post-self-insert . my/yas-try-expanding-auto-snippets)))
+  :ensure t
+  :hook ((LaTeX-mode . yas-minor-mode)
+         (post-self-insert . my/yas-try-expanding-auto-snippets)))
 
 (setq yas-triggers-in-field t)
 

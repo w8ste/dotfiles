@@ -105,24 +105,24 @@
     ;; Enable :elpaca use-package keyword.
     (elpaca-use-package-mode)
     ;; Assume :elpaca t unless otherwise specified.
-      (setq elpaca-use-package-by-default t))
+    (setq elpaca-use-package-by-default t))
 
-    ;; Block until current queue processed.
-    (elpaca-wait)
+  ;; Block until current queue processed.
+  (elpaca-wait)
 
-    ;;When installing a package which modifies a form used at the top-level
-    ;;(e.g. a package which adds a use-package key word),
-    ;;use `elpaca-wait' to block until that package has been installed/configured.
-    ;;For example:
-    ;;(USE-package general :demand t)
-    ;;(elpaca-wait)
-    ;;Turns off elpaca-use-package-mode current declartion
-    ;;Note this will cause the declaration to be interpreted immediately (not deferred).
-    ;;Useful for configuring built-in emacs features.
-    (use-package emacs :elpaca nil :config (setq ring-bell-function #'ignore))
+  ;;When installing a package which modifies a form used at the top-level
+  ;;(e.g. a package which adds a use-package key word),
+  ;;use `elpaca-wait' to block until that package has been installed/configured.
+  ;;For example:
+  ;;(USE-package general :demand t)
+  ;;(elpaca-wait)
+  ;;Turns off elpaca-use-package-mode current declartion
+  ;;Note this will cause the declaration to be interpreted immediately (not deferred).
+  ;;Useful for configuring built-in emacs features.
+  (use-package emacs :elpaca nil :config (setq ring-bell-function #'ignore))
 
-    ;; Don't install anything. Defer execution of BODY
-    ;;(elpaca nil (message "deferred"))
+  ;; Don't install anything. Defer execution of BODY
+  ;;(elpaca nil (message "deferred"))
 
 #+end_src
 
@@ -144,13 +144,13 @@
 
   ;; settings keybindings for evil
   (with-eval-after-load 'evil-maps
-  (define-key evil-motion-state-map (kbd "SPC") nil)
-  (define-key evil-motion-state-map (kbd "RET") nil)
-  (define-key evil-visual-state-map (kbd "C-c") 'evil-normal-state)
-  (define-key evil-insert-state-map (kbd "C-c") 'evil-normal-state)
-  (define-key evil-motion-state-map (kbd "C-e") nil)
-  (define-key evil-visual-state-map (kbd "C-c") 'evil-exit-visual-state)
-  (define-key evil-motion-state-map (kbd "TAB") nil))
+    (define-key evil-motion-state-map (kbd "SPC") nil)
+    (define-key evil-motion-state-map (kbd "RET") nil)
+    (define-key evil-visual-state-map (kbd "C-c") 'evil-normal-state)
+    (define-key evil-insert-state-map (kbd "C-c") 'evil-normal-state)
+    (define-key evil-motion-state-map (kbd "C-e") nil)
+    (define-key evil-visual-state-map (kbd "C-c") 'evil-exit-visual-state)
+    (define-key evil-motion-state-map (kbd "TAB") nil))
 #+end_src
 
 ** General Keybindings
@@ -328,118 +328,119 @@
 
 * AUCTex
 #+begin_src emacs-lisp
-
   (use-package auctex
-    :defer t
+    :elpaca (auctex :pre-build (("./autogen.sh") ("./configure" "--without-texmf-dir" "--with-lispdir=.") ("make")))
+    :mode
+    ("\\.tex\\'" . TeX-latex-mode)
     :hook
-    (LaTeX-mode . lsp-deferred))
-  ;; :hook (LaTeX-mode . (lambda ()
-  ;;                       (push (list 'output-pdf "Zathura")
-  ;;                             TeX-view-program-selection))))
+    ((LaTeX-mode . lsp-deferred)
+     (LaTeX-mode . (lambda ()
+                     (push (list 'output-pdf "Evince")
+                           TeX-view-program-selection)))))
 
 #+end_src
 
 * Autopair
 #+begin_src emacs-lisp
-      (use-package smartparens
-        :init
-        (smartparens-global-mode))
+  (use-package smartparens
+    :init
+    (smartparens-global-mode))
 #+end_src
 
 * Buffer-Move
 #+begin_src emacs-lisp
- (require 'windmove)
+  (require 'windmove)
 
-;;;###autoload
-(defun buf-move-up ()
-  "Swap the current buffer and the buffer above the split.
-If there is no split, ie now window above the current one, an
-error is signaled."
-;;  "Switches between the current buffer, and the buffer above the
-;;  split, if possible."
-  (interactive)
-  (let* ((other-win (windmove-find-other-window 'up))
-	 (buf-this-buf (window-buffer (selected-window))))
-    (if (null other-win)
-        (error "No window above this one")
-      ;; swap top with this one
-      (set-window-buffer (selected-window) (window-buffer other-win))
-      ;; move this one to top
-      (set-window-buffer other-win buf-this-buf)
-      (select-window other-win))))
+  ;;;###autoload
+  (defun buf-move-up ()
+    "Swap the current buffer and the buffer above the split.
+  If there is no split, ie now window above the current one, an
+  error is signaled."
+    ;;  "Switches between the current buffer, and the buffer above the
+    ;;  split, if possible."
+    (interactive)
+    (let* ((other-win (windmove-find-other-window 'up))
+           (buf-this-buf (window-buffer (selected-window))))
+      (if (null other-win)
+          (error "No window above this one")
+        ;; swap top with this one
+        (set-window-buffer (selected-window) (window-buffer other-win))
+        ;; move this one to top
+        (set-window-buffer other-win buf-this-buf)
+        (select-window other-win))))
 
-;;;###autoload
-(defun buf-move-down ()
-"Swap the current buffer and the buffer under the split.
-If there is no split, ie now window under the current one, an
-error is signaled."
-  (interactive)
-  (let* ((other-win (windmove-find-other-window 'down))
-	 (buf-this-buf (window-buffer (selected-window))))
-    (if (or (null other-win) 
-            (string-match "^ \\*Minibuf" (buffer-name (window-buffer other-win))))
-        (error "No window under this one")
-      ;; swap top with this one
-      (set-window-buffer (selected-window) (window-buffer other-win))
-      ;; move this one to top
-      (set-window-buffer other-win buf-this-buf)
-      (select-window other-win))))
+  ;;;###autoload
+  (defun buf-move-down ()
+    "Swap the current buffer and the buffer under the split.
+  If there is no split, ie now window under the current one, an
+  error is signaled."
+    (interactive)
+    (let* ((other-win (windmove-find-other-window 'down))
+           (buf-this-buf (window-buffer (selected-window))))
+      (if (or (null other-win) 
+              (string-match "^ \\*Minibuf" (buffer-name (window-buffer other-win))))
+          (error "No window under this one")
+        ;; swap top with this one
+        (set-window-buffer (selected-window) (window-buffer other-win))
+        ;; move this one to top
+        (set-window-buffer other-win buf-this-buf)
+        (select-window other-win))))
 
-;;;###autoload
-(defun buf-move-left ()
-"Swap the current buffer and the buffer on the left of the split.
-If there is no split, ie now window on the left of the current
-one, an error is signaled."
-  (interactive)
-  (let* ((other-win (windmove-find-other-window 'left))
-	 (buf-this-buf (window-buffer (selected-window))))
-    (if (null other-win)
-        (error "No left split")
-      ;; swap top with this one
-      (set-window-buffer (selected-window) (window-buffer other-win))
-      ;; move this one to top
-      (set-window-buffer other-win buf-this-buf)
-      (select-window other-win))))
+  ;;;###autoload
+  (defun buf-move-left ()
+    "Swap the current buffer and the buffer on the left of the split.
+  If there is no split, ie now window on the left of the current
+  one, an error is signaled."
+    (interactive)
+    (let* ((other-win (windmove-find-other-window 'left))
+           (buf-this-buf (window-buffer (selected-window))))
+      (if (null other-win)
+          (error "No left split")
+        ;; swap top with this one
+        (set-window-buffer (selected-window) (window-buffer other-win))
+        ;; move this one to top
+        (set-window-buffer other-win buf-this-buf)
+        (select-window other-win))))
 
-;;;###autoload
-(defun buf-move-right ()
-"Swap the current buffer and the buffer on the right of the split.
-If there is no split, ie now window on the right of the current
-one, an error is signaled."
-  (interactive)
-  (let* ((other-win (windmove-find-other-window 'right))
-	 (buf-this-buf (window-buffer (selected-window))))
-    (if (null other-win)
-        (error "No right split")
-      ;; swap top with this one
-      (set-window-buffer (selected-window) (window-buffer other-win))
-      ;; move this one to top
-      (set-window-buffer other-win buf-this-buf)
-      (select-window other-win)))) 
+  ;;;###autoload
+  (defun buf-move-right ()
+    "Swap the current buffer and the buffer on the right of the split.
+  If there is no split, ie now window on the right of the current
+  one, an error is signaled."
+    (interactive)
+    (let* ((other-win (windmove-find-other-window 'right))
+           (buf-this-buf (window-buffer (selected-window))))
+      (if (null other-win)
+          (error "No right split")
+        ;; swap top with this one
+        (set-window-buffer (selected-window) (window-buffer other-win))
+        ;; move this one to top
+        (set-window-buffer other-win buf-this-buf)
+        (select-window other-win)))) 
 #+end_src
 
 * Dashboard
 #+begin_src emacs-lisp
-(use-package dashboard
-  :ensure t 
-  :init
-  (setq initial-buffer-choice 'dashboard-open)
-  (setq dashboard-set-heading-icons t)
-  (setq dashboard-set-file-icons t)
-  (setq dashboard-banner-logo-title "Emacs Is More Than A Text Editor!")
-  ;;(setq dashboard-startup-banner 'logo) ;; use standard emacs logo as banner
-  (setq dashboard-startup-banner "~/.config/emacs/images/emacs-dash.png")  ;; use custom image as banner
-  (setq dashboard-center-content t) ;; set to 't' for centered content
-  (setq dashboard-items '((recents . 5)
-                          (agenda . 5 )
-                          (bookmarks . 3)
-                          (projects . 3)
-                          (registers . 3)))
-  :custom
-  (dashboard-modify-heading-icons '((recents . "file-text")
-                                    (bookmarks . "book")))
-  :config
-  (dashboard-setup-startup-hook))
+  (use-package dashboard
+    :ensure t 
+    :init
+    (setq initial-buffer-choice 'dashboard-open)
+    (setq dashboard-set-heading-icons t)
+    (setq dashboard-set-file-icons t)
+    (setq dashboard-banner-logo-title "Emacs Is More Than A Text Editor!")
+    ;;(setq dashboard-startup-banner 'logo) ;; use standard emacs logo as banner
+    (setq dashboard-startup-banner "~/.config/emacs/images/emacs-dash.png")  ;; use custom image as banner
+    (setq dashboard-center-content t) ;; set to 't' for centered content
+    (setq dashboard-items '((recents . 5)
+                            (agenda . 5 )
+                            (bookmarks . 3)
+                            (projects . 3)
+                            (registers . 3)))
+    :custom
+    (dashboard-modify-heading-icons '((recents . "file-text")
+                                      (bookmarks . "book")))
+    :config
+    (dashboard-setup-startup-hook))
 #+end_src
 
 * Diminish
@@ -450,23 +451,23 @@ Option that implements hiding of minor-modes in the modeline
 
 * Dired
 #+begin_src emacs-lisp
- (use-package dired-open
-  :config
-  (setq dired-open-extensions '(("gif" . "sxiv")
-                                ("jpg" . "sxiv")
-                                ("png" . "sxiv")
-                                ("mkv" . "mpv")
-                                ("mp4" . "mpv"))))
+  (use-package dired-open
+    :config
+    (setq dired-open-extensions '(("gif" . "sxiv")
+                                  ("jpg" . "sxiv")
+                                  ("png" . "sxiv")
+                                  ("mkv" . "mpv")
+                                  ("mp4" . "mpv"))))
 
-(use-package peep-dired
-  :after dired
-  :hook (evil-normalize-keymaps . peep-dired-hook)
-  :config
+  (use-package peep-dired
+    :after dired
+    :hook (evil-normalize-keymaps . peep-dired-hook)
+    :config
     (evil-define-key 'normal dired-mode-map (kbd "h") 'dired-up-directory)
     (evil-define-key 'normal dired-mode-map (kbd "l") 'dired-open-file) ; use dired-find-file instead if not using dired-open package
     (evil-define-key 'normal peep-dired-mode-map (kbd "j") 'peep-dired-next-file)
     (evil-define-key 'normal peep-dired-mode-map (kbd "k") 'peep-dired-prev-file)
-)
+    )
 #+end_src
 
 * Disord status
@@ -481,24 +482,24 @@ Option that implements hiding of minor-modes in the modeline
 #+begin_src emacs-lisp
   (set-frame-font "JetBrains Mono Medium 19")
   (set-face-attribute 'default nil
-    :font "JetBrains Mono Medium"
-    :height 110
-    :weight 'medium)
+                      :font "JetBrains Mono Medium"
+                      :height 110
+                      :weight 'medium)
   (set-face-attribute 'variable-pitch nil
-    :font "JetBrains Mono Medium"
-    :height 120
-    :weight 'medium)
+                      :font "JetBrains Mono Medium"
+                      :height 120
+                      :weight 'medium)
   (set-face-attribute 'fixed-pitch nil
-    :font "JetBrains Mono Medium"
-    :height 110
-    :weight 'medium)
+                      :font "JetBrains Mono Medium"
+                      :height 110
+                      :weight 'medium)
   ;; Makes commented text and keywords italics.
   ;; This is working in emacsclient but not emacs.
   ;; Your font must have an italic face available.
   (set-face-attribute 'font-lock-comment-face nil
-    :slant 'italic)
+                      :slant 'italic)
   (set-face-attribute 'font-lock-keyword-face nil
-    :slant 'italic)
+                      :slant 'italic)
 
   ;; This sets the default font on all graphical frames created after restarting Emacs.
   ;; Does the same thing as 'set-face-attribute default' above, but emacsclient fonts
@@ -536,8 +537,8 @@ Option that implements hiding of minor-modes in the modeline
 #+end_src
 ** Magit
 #+begin_src emacs-lisp
-    (use-package magit
-      :diminish)
+  (use-package magit
+    :diminish)
 #+end_src
 
 * GUI Settings
@@ -550,9 +551,9 @@ Option that implements hiding of minor-modes in the modeline
 
 ** Display Line Numbers and truncated Lines
 #+begin_src emacs-lisp
-    (global-display-line-numbers-mode 1)
-    (setq display-line-numbers-type 'relative)
-    (global-visual-line-mode t)
+  (global-display-line-numbers-mode 1)
+  (setq display-line-numbers-type 'relative)
+  (global-visual-line-mode t)
 #+end_src
 
 * Hackernews
@@ -575,18 +576,18 @@ Option that implements hiding of minor-modes in the modeline
 
 * Highlight TODO
 #+begin_src emacs-lisp
-(use-package hl-todo
-  :hook ((org-mode . hl-todo-mode)
-         (prog-mode . hl-todo-mode))
-  :config
-  (setq hl-todo-highlight-punctuation ":"
-        hl-todo-keyword-faces
-        `(("TODO"       warning bold)
-          ("FIXME"      error bold)
-          ("HACK"       font-lock-constant-face bold)
-          ("REVIEW"     font-lock-keyword-face bold)
-          ("NOTE"       success bold)
-          ("DEPRECATED" font-lock-doc-face bold))))
+  (use-package hl-todo
+    :hook ((org-mode . hl-todo-mode)
+           (prog-mode . hl-todo-mode))
+    :config
+    (setq hl-todo-highlight-punctuation ":"
+          hl-todo-keyword-faces
+          `(("TODO"       warning bold)
+            ("FIXME"      error bold)
+            ("HACK"       font-lock-constant-face bold)
+            ("REVIEW"     font-lock-keyword-face bold)
+            ("NOTE"       success bold)
+            ("DEPRECATED" font-lock-doc-face bold))))
 #+end_src
 
 * IVY (Counsel)
@@ -624,7 +625,7 @@ Option that implements hiding of minor-modes in the modeline
     :config
     (ivy-set-display-transformer 'ivy-switch-buffer
                                  'ivy-rich-switch-buffer-transformer))
-    #+end_src
+#+end_src
 
 * Language Support
 ** Lsp mode
@@ -640,7 +641,6 @@ Option that implements hiding of minor-modes in the modeline
     (add-hook 'java-mode-hook 'lsp)
     (add-hook 'sh-mode-hook 'lsp)
     (add-hook 'tex-mode-hook 'lsp)
-    (add-hook 'latex-mode-hook 'lsp)
     '(lsp-enable-whichkey-integration t)
     (lsp))
 
@@ -654,57 +654,57 @@ Option that implements hiding of minor-modes in the modeline
 
 ** Corfu
 #+begin_src emacs-lisp
-   (use-package corfu
-     ;; Optional customizations
-     :custom
-     (corfu-cycle t)                 ; Allows cycling through candidates
-     (corfu-auto t)                  ; Enable auto completion
-     (corfu-auto-prefix 2)
-     (corfu-auto-delay 0.0)
-     (corfu-popupinfo-delay 0.0)
-     (corfu-preview-current 'insert) ; Do not preview current candidate
-     (corfu-preselect 'prompt)
-     (corfu-on-exact-match nil)      ; Don't auto expand tempel snippets
+  (use-package corfu
+    ;; Optional customizations
+    :custom
+    (corfu-cycle t)                 ; Allows cycling through candidates
+    (corfu-auto t)                  ; Enable auto completion
+    (corfu-auto-prefix 2)
+    (corfu-auto-delay 0.0)
+    (corfu-popupinfo-delay 0.0)
+    (corfu-preview-current 'insert) ; Do not preview current candidate
+    (corfu-preselect 'prompt)
+    (corfu-on-exact-match nil)      ; Don't auto expand tempel snippets
 
-     ;; Optionally use TAB for cycling, default is `corfu-complete'.
-     :bind (:map corfu-map
-                 ("M-SPC"      . corfu-insert-separator)
-                 ("C-j"        . corfu-next)
-                 ([tab]        . corfu-next)
-                 ("C-k"      . corfu-previous)
-                 ("C-u" . corfu-insert)
-                 ("C-i" . corfu-popupinfo-documentation)
-                 ("RET"        . nil))
+    ;; Optionally use TAB for cycling, default is `corfu-complete'.
+    :bind (:map corfu-map
+                ("M-SPC"      . corfu-insert-separator)
+                ("C-j"        . corfu-next)
+                ([tab]        . corfu-next)
+                ("C-k"      . corfu-previous)
+                ("C-u" . corfu-insert)
+                ("C-i" . corfu-popupinfo-documentation)
+                ("RET"        . nil))
 
-     :init
-     (global-corfu-mode)
-     (corfu-history-mode)
-      (setq corfu-popupinfo-delay 0.2)
-     (corfu-popupinfo-mode) ; Popup completion info
-     :config
-     (add-hook 'eshell-mode-hook
-               (lambda () (setq-local corfu-quit-at-boundary t
-                                 corfu-quit-no-match t
-                                 corfu-auto nil)
-                 (corfu-mode))))
+    :init
+    (global-corfu-mode)
+    (corfu-history-mode)
+    (setq corfu-popupinfo-delay 0.2)
+    (corfu-popupinfo-mode) ; Popup completion info
+    :config
+    (add-hook 'eshell-mode-hook
+              (lambda () (setq-local corfu-quit-at-boundary t
+                                     corfu-quit-no-match t
+                                     corfu-auto nil)
+                (corfu-mode))))
 
   (use-package kind-icon
-   :after corfu
-   :custom
-   (kind-icon-use-icons t)
-   (kind-icon-default-face 'corfu-default) ; Have background color be the same as `corfu' face background
-   (kind-icon-blend-background nil)  ; Use midpoint color between foreground and background colors ("blended")?
-   (kind-icon-blend-frac 0.08)
-   ;;(svg-lib-icons-dir (no-littering-expand-var-file-name "svg-lib/cache/")) ; Change cache dir
-   :config
-   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter) ; Enable `kind-icon'
-   (add-hook 'kb/themes-hooks #'(lambda () (interactive) (kind-icon-reset-cache))))
+    :after corfu
+    :custom
+    (kind-icon-use-icons t)
+    (kind-icon-default-face 'corfu-default) ; Have background color be the same as `corfu' face background
+    (kind-icon-blend-background nil)  ; Use midpoint color between foreground and background colors ("blended")?
+    (kind-icon-blend-frac 0.08)
+    ;;(svg-lib-icons-dir (no-littering-expand-var-file-name "svg-lib/cache/")) ; Change cache dir
+    :config
+    (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter) ; Enable `kind-icon'
+    (add-hook 'kb/themes-hooks #'(lambda () (interactive) (kind-icon-reset-cache))))
 #+end_src
 
 ** Java
 #+begin_src emacs-lisp
-      (use-package lsp-java
-        :hook (java-mode . lsp-deferred))
+  (use-package lsp-java
+    :hook (java-mode . lsp-deferred))
 #+end_src
 
 ** Python
@@ -763,12 +763,13 @@ Option that implements hiding of minor-modes in the modeline
 ** Ltex
 #+begin_src emacs-lisp
   (use-package lsp-ltex
+    :diminish
     :ensure t
-    :hook (text-mode . (lambda ()
+    :hook (tex-mode . (lambda ()
                          (require 'lsp-ltex)
                          (lsp)))  ; or lsp-deferred
     :init
-    (setq lsp-ltex-version "15.2.0"))  ; make sure you have set this, see below 
+    (setq lsp-ltex-version "16.0.0"))  ; make sure you have set this, see below
 #+end_src
 
 * Minibuffer Escape
@@ -778,34 +779,34 @@ Option that implements hiding of minor-modes in the modeline
 
 * Modeline
 #+begin_src emacs-lisp
-(use-package doom-modeline
-  :ensure t
-  :init (doom-modeline-mode 1)
-  :config
-  (setq doom-modeline-height 35      ;; sets modeline height
-        doom-modeline-bar-width 5    ;; sets right bar width
-        doom-modeline-persp-name t   ;; adds perspective name to modeline
-        doom-modeline-persp-icon t)) ;; adds folder icon next to persp name
+  (use-package doom-modeline
+    :ensure t
+    :init (doom-modeline-mode 1)
+    :config
+    (setq doom-modeline-height 35      ;; sets modeline height
+          doom-modeline-bar-width 5    ;; sets right bar width
+          doom-modeline-persp-name t   ;; adds perspective name to modeline
+          doom-modeline-persp-icon t)) ;; adds folder icon next to persp name
 #+end_src
 
 * Neotree
 #+begin_src emacs-lisp
-(use-package neotree
-  :config
-  (setq neo-smart-open t
-        neo-show-hidden-files t
-        neo-window-width 37
-        neo-window-fixed-size nil
-        inhibit-compacting-font-caches t
-        projectile-switch-project-action 'neotree-projectile-action) 
-  ;; truncate long file names in neotree
-  (add-hook 'neo-after-create-hook
-            #'(lambda (_)
-                (with-current-buffer (get-buffer neo-buffer-name)
-                  (setq truncate-lines t)
-                  (setq word-wrap nil)
-                  (make-local-variable 'auto-hscroll-mode)
-                  (setq auto-hscroll-mode nil)))))
+  (use-package neotree
+    :config
+    (setq neo-smart-open t
+          neo-show-hidden-files t
+          neo-window-width 37
+          neo-window-fixed-size nil
+          inhibit-compacting-font-caches t
+          projectile-switch-project-action 'neotree-projectile-action) 
+    ;; truncate long file names in neotree
+    (add-hook 'neo-after-create-hook
+              #'(lambda (_)
+                  (with-current-buffer (get-buffer neo-buffer-name)
+                    (setq truncate-lines t)
+                    (setq word-wrap nil)
+                    (make-local-variable 'auto-hscroll-mode)
+                    (setq auto-hscroll-mode nil)))))
 #+end_src
 
 * Org Mode
@@ -820,9 +821,9 @@ Option that implements hiding of minor-modes in the modeline
 
 ** Enable bullet points
 #+begin_src emacs-lisp
-(add-hook 'org-mode-hook 'org-indent-mode)
-(use-package org-bullets)
-(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+  (add-hook 'org-mode-hook 'org-indent-mode)
+  (use-package org-bullets)
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 #+end_src
 
 ** Disable electric indent
@@ -837,8 +838,8 @@ Option that implements hiding of minor-modes in the modeline
 
 * PDP-Tool
 #+begin_src emacs-lisp
-    (use-package pdf-tools
-      :defer t)
+  (use-package pdf-tools
+    :defer t)
 #+end_src
 * Perspective
 #+begin_src emacs-lisp
@@ -884,63 +885,63 @@ Projectile is a project interaction library for Emacs.
 
 * Rainbow Mode
 #+begin_src emacs-lisp
-(use-package rainbow-mode
-  :diminish
-  :hook 
-  ((org-mode prog-mode) . rainbow-mode))
+  (use-package rainbow-mode
+    :diminish
+    :hook 
+    ((org-mode prog-mode) . rainbow-mode))
 #+end_src
 
 * Shells and Terminals
 ** Eshell
 Shell written in emacs-lisp
 #+begin_src emacs-lisp
-(use-package eshell-syntax-highlighting
-  :after esh-mode
-  :config
-  (eshell-syntax-highlighting-global-mode +1))
+  (use-package eshell-syntax-highlighting
+    :after esh-mode
+    :config
+    (eshell-syntax-highlighting-global-mode +1))
 
-;; eshell-syntax-highlighting -- adds fish/zsh-like syntax highlighting.
-;; eshell-rc-script -- your profile for eshell; like a bashrc for eshell.
-;; eshell-aliases-file -- sets an aliases file for the eshell.
-  
-(setq eshell-rc-script (concat user-emacs-directory "eshell/profile")
-      eshell-aliases-file (concat user-emacs-directory "eshell/aliases")
-      eshell-history-size 5000
-      eshell-buffer-maximum-lines 5000
-      eshell-hist-ignoredups t
-      eshell-scroll-to-bottom-on-input t
-      eshell-destroy-buffer-when-process-dies t
-      eshell-visual-commands'("bash" "fish" "htop" "ssh" "top" "zsh"))
+  ;; eshell-syntax-highlighting -- adds fish/zsh-like syntax highlighting.
+  ;; eshell-rc-script -- your profile for eshell; like a bashrc for eshell.
+  ;; eshell-aliases-file -- sets an aliases file for the eshell.
+
+  (setq eshell-rc-script (concat user-emacs-directory "eshell/profile")
+        eshell-aliases-file (concat user-emacs-directory "eshell/aliases")
+        eshell-history-size 5000
+        eshell-buffer-maximum-lines 5000
+        eshell-hist-ignoredups t
+        eshell-scroll-to-bottom-on-input t
+        eshell-destroy-buffer-when-process-dies t
+        eshell-visual-commands'("bash" "fish" "htop" "ssh" "top" "zsh"))
 #+end_src
 ** Vterm
 Terminal emulator in emacs
 #+begin_src emacs-lisp
-(use-package vterm
-:config
-(setq shell-file-name "/bin/fish"
-      vterm-max-scrollback 5000))
+  (use-package vterm
+    :config
+    (setq shell-file-name "/bin/fish"
+          vterm-max-scrollback 5000))
 #+end_src
 ** Vterm-toggle
 Helps toggling vterm
 #+begin_src emacs-lisp
-(use-package vterm-toggle
-  :after vterm
-  :config
-  (setq vterm-toggle-fullscreen-p nil)
-  (setq vterm-toggle-scope 'project)
-  (add-to-list 'display-buffer-alist
-               '((lambda (buffer-or-name _)
+  (use-package vterm-toggle
+    :after vterm
+    :config
+    (setq vterm-toggle-fullscreen-p nil)
+    (setq vterm-toggle-scope 'project)
+    (add-to-list 'display-buffer-alist
+                 '((lambda (buffer-or-name _)
                      (let ((buffer (get-buffer buffer-or-name)))
                        (with-current-buffer buffer
                          (or (equal major-mode 'vterm-mode)
                              (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
-                  (display-buffer-reuse-window display-buffer-at-bottom)
-                  ;;(display-buffer-reuse-window display-buffer-in-direction)
-                  ;;display-buffer-in-direction/direction/dedicated is added in emacs27
-                  ;;(direction . bottom)
-                  ;;(dedicated . t) ;dedicated is supported in emacs27
-                  (reusable-frames . visible)
-                  (window-height . 0.3))))
+                   (display-buffer-reuse-window display-buffer-at-bottom)
+                   ;;(display-buffer-reuse-window display-buffer-in-direction)
+                   ;;display-buffer-in-direction/direction/dedicated is added in emacs27
+                   ;;(direction . bottom)
+                   ;;(dedicated . t) ;dedicated is supported in emacs27
+                   (reusable-frames . visible)
+                   (window-height . 0.3))))
 #+end_src
 * Sudo Edit
 #+begin_src emacs-lisp
@@ -953,23 +954,23 @@ Helps toggling vterm
 
 * Theme
 #+begin_src emacs-lisp
-(use-package doom-themes
-  :ensure t
-  :config
-  ;; Global settings (defaults)
-  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-        doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  (load-theme 'doom-tokyo-night t)
+  (use-package doom-themes
+    :ensure t
+    :config
+    ;; Global settings (defaults)
+    (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+          doom-themes-enable-italic t) ; if nil, italics is universally disabled
+    (load-theme 'doom-tokyo-night t)
 
-  ;; Enable flashing mode-line on errors
-  (doom-themes-visual-bell-config)
-  ;; Enable custom neotree theme (all-the-icons must be installed!)
-  (doom-themes-neotree-config)
-  ;; or for treemacs users
-  (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
-  (doom-themes-treemacs-config)
-  ;; Corrects (and improves) org-mode's native fontification.
-  (doom-themes-org-config))
+    ;; Enable flashing mode-line on errors
+    (doom-themes-visual-bell-config)
+    ;; Enable custom neotree theme (all-the-icons must be installed!)
+    (doom-themes-neotree-config)
+    ;; or for treemacs users
+    (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
+    (doom-themes-treemacs-config)
+    ;; Corrects (and improves) org-mode's native fontification.
+    (doom-themes-org-config))
 #+end_src
 
 * TLDR
@@ -988,42 +989,42 @@ Helps toggling vterm
     :init
     (global-tree-sitter-mode)
     (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
-    (use-package tree-sitter-langs)
+  (use-package tree-sitter-langs)
 #+end_src
 
 * WHICH-KEY
 #+begin_src emacs-lisp
   (use-package which-key
-  :init
+    :init
     (which-key-mode 1)
-  :config
-  (setq which-key-side-window-location 'bottom
-	  which-key-sort-order #'which-key-key-order-alpha
-	  which-key-sort-uppercase-first nil
-	  which-key-add-column-padding 1
-	  which-key-max-display-columns nil
-	  which-key-min-display-lines 6
-	  which-key-side-window-slot -10
-	  which-key-side-window-max-height 0.25
-	  which-key-idle-delay 0.8
-	  which-key-max-description-length 25
-	  which-key-allow-imprecise-window-fit nil 
-	  which-key-separator " → " ))
+    :config
+    (setq which-key-side-window-location 'bottom
+          which-key-sort-order #'which-key-key-order-alpha
+          which-key-sort-uppercase-first nil
+          which-key-add-column-padding 1
+          which-key-max-display-columns nil
+          which-key-min-display-lines 6
+          which-key-side-window-slot -10
+          which-key-side-window-max-height 0.25
+          which-key-idle-delay 0.8
+          which-key-max-description-length 25
+          which-key-allow-imprecise-window-fit nil 
+          which-key-separator " → " ))
 #+end_src
 
 * Yasnippet
 #+begin_src emacs-lisp
-    (use-package yasnippet
+  (use-package yasnippet
     :ensure t
     :hook ((LaTeX-mode . yas-minor-mode)
            (post-self-insert . my/yas-try-expanding-auto-snippets)))
 
-    (setq yas-triggers-in-field t)
-  
-    ;; Function that tries to autoexpand YaSnippets
-    ;; The double quoting is NOT a typo!
-    (defun my/yas-try-expanding-auto-snippets ()
-      (when (and (boundp 'yas-minor-mode) yas-minor-mode)
-        (let ((yas-buffer-local-condition ''(require-snippet-condition . auto)))
-          (yas-expand))))
+  (setq yas-triggers-in-field t)
+
+  ;; Function that tries to autoexpand YaSnippets
+  ;; The double quoting is NOT a typo!
+  (defun my/yas-try-expanding-auto-snippets ()
+    (when (and (boundp 'yas-minor-mode) yas-minor-mode)
+      (let ((yas-buffer-local-condition ''(require-snippet-condition . auto)))
+        (yas-expand))))
 #+end_src

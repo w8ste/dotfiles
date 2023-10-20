@@ -198,3 +198,7 @@ cd 01
 ls
 cd ..
 lh
+cd ..
+cd ,,
+cd ..
+mv latexmkrc DT/Tutor/01/
