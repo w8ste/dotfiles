@@ -45,7 +45,7 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 #exec --no-startup-id ~/.config/scripts/pad.sh
 
 # autostart picom
-exec --no-startup-id picom -b
+# exec --no-startup-id picom -b
 
 # launch spotify on startup
 exec --no-startup-id flatpak run com.spotify.Client &
@@ -219,18 +219,18 @@ default_floating_border pixel 3
 # gaps
 
 # Configure the space between windows and to the screen edges.
-gaps inner 11px
+# gaps inner 11px
 
 # Configure an additional  of extra space to the screen edges,
 # for a total gap of 10px to the screen edges, and 5px between windows.
 #gaps outer 0px -> does not influnce the gaps for some reason
 
 # No gaps on workspace 
-workspace $ws3 gaps inner 0
-workspace $ws3 gaps outer 0
+#workspace $ws3 gaps inner 0
+#workspace $ws3 gaps outer 0
 
 # Only enable outer gaps when there is exactly one window or split container on the workspace.
-smart_gaps inverse_outer
+# smart_gaps inverse_outer
 
 # Add polybar
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
