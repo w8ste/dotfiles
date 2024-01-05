@@ -19,6 +19,7 @@ These are the pieces of software i use:
 - alacritty
 - btop
 - dunst
+- emacs
 - flameshot
 - htop
 - i3
