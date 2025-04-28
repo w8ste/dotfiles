@@ -1,0 +1,6 @@
+unmap <C-n>
+unmap <S-j>
+unmap <S-k>
+
+map <C-n> navigate next
+map <C-p> navigate previous
